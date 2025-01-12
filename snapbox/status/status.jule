@@ -4,7 +4,7 @@
 // Copyright (c) 2025, Adam Perkowski
 // BSD 3-Clause License
 
-type StatusCode = int
+type StatusCode: int
 
 fn IsInformational(code: StatusCode): bool {
 	ret code >= 100 && code < 200

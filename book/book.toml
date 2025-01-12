@@ -1,0 +1,17 @@
+[book]
+authors = ["Adam Perkowski"]
+language = "en"
+multilingual = false
+src = "src"
+title = "snapbox"
+
+[output.html]
+cname = "snapbox.adamperkowski.dev"
+preferred-dark-theme = "coal"
+preferred-light-theme = "light"
+git-repository-url = "https://github.com/adamperkowski/snapbox"
+edit-url-template = "https://github.com/adamperkowski/snapbox/edit/main/book/{path}"
+additional-js = ["theme/jule-highlight.js"]
+
+[output.html.search]
+use-boolean-and = true
