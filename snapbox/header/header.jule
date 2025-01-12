@@ -1,0 +1,8 @@
+// snapbox
+// HTTP Client Library for Jule
+// https://github.com/adamperkowski/snapbox
+// Copyright (c) 2025, Adam Perkowski
+// BSD 3-Clause License
+
+type HeaderName: str
+type HeaderMap: map[HeaderName]str

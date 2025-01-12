@@ -1,0 +1,23 @@
+// snapbox
+// HTTP Client Library for Jule
+// https://github.com/adamperkowski/snapbox
+// Copyright (c) 2025, Adam Perkowski
+// BSD 3-Clause License
+
+type StatusCode = int
+
+fn IsInformational(code: StatusCode): bool {
+	ret code >= 100 && code < 200
+}
+fn IsSuccess(code: StatusCode): bool {
+	ret code >= 200 && code < 300
+}
+fn IsRedirection(code: StatusCode): bool {
+	ret code >= 300 && code < 400
+}
+fn IsClientError(code: StatusCode): bool {
+	ret code >= 400 && code < 500
+}
+fn IsServerError(code: StatusCode): bool {
+	ret code >= 500 && code < 600
+}

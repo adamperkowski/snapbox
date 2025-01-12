@@ -1,0 +1,49 @@
+name: Jule CI
+on:
+  push:
+    paths:
+      - "examples/**/*"
+      - "snapbox/**/*"
+    branches: ["main"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  jule:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name:  Install JuleC
+        run: |
+          mkdir .julec
+          cd .julec
+          bash <(curl -s https://raw.githubusercontent.com/julelang/julec-ir/main/compile-ir.sh)
+          echo "$(pwd)/jule-master/bin" >> $GITHUB_PATH
+          cd ..
+      - name: Install JuleFmt
+        run: |
+          git clone https://github.com/julelang/julefmt.git --depth=1 .julefmt
+          cd .julefmt
+          mkdir -p bin
+          julec --opt-deadcode -o bin/julefmt ./src
+          echo "$(pwd)/bin" >> $GITHUB_PATH
+          cd ..
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y libcurl4-openssl-dev
+
+      - name: Run checks
+        run: |
+          make .PHONY
+
+      - name: Clean up
+        run: |
+          rm -rf .julec .julefmt **/.*out **/bin
+          make clean
+
+      - name: Check formatting
+        run: |
+          git diff --quiet || { echo 'Please run `make format` and push the changes.' exit 1; }

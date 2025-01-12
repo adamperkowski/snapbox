@@ -1,0 +1,66 @@
+name: Release snapbox
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'new semantic version'
+        required: true
+        default: 'v0.0.0'
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Generate `CHANGELOG.md`
+        uses: orhun/git-cliff-action@v4
+        with:
+          config: cliff.toml
+          args: --tag ${{ github.event.inputs.version }}
+        env:
+          OUTPUT: CHANGELOG.md
+
+      - name: Commit and tag
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          set +e
+          git add CHANGELOG.md
+          git commit -m "chore(release): prepare for ${{ github.event.inputs.version }}"
+          git tag -a ${{ github.event.inputs.version }} -m "${{ github.event.inputs.version }}"
+          git push https://${{ secrets.GH_TOKEN }}@github.com/adamperkowski/snapbox.git ${{ github.event.inputs.version }}
+
+  release:
+    runs-on: ubuntu-latest
+    needs: tag
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.version }}
+
+      - name: Prepare files
+        run: |
+          cp LICENSE snapbox/LICENSE
+          cp CHANGELOG.md snapbox/CHANGELOG.md
+          tar -czf snapbox-${{ github.event.inputs.version }}.tar.gz snapbox
+          zip -r snapbox-${{ github.event.inputs.version }}.zip snapbox
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.inputs.version }}
+          name: ${{ github.event.inputs.version }}
+          body: |
+            snapbox ${{ github.event.inputs.version }}
+            ## major changes
+          append_body: true
+          files: |
+            snapbox-${{ github.event.inputs.version }}.tar.gz
+            snapbox-${{ github.event.inputs.version }}.zip
+          prerelease: ${{ contains(github.event.inputs.version, '-') }}

@@ -1,0 +1,42 @@
+// snapbox
+// HTTP Client Library for Jule
+// https://github.com/adamperkowski/snapbox
+// Copyright (c) 2025, Adam Perkowski
+// BSD 3-Clause License
+
+#pass "-lcurl"
+
+use "header"
+use "status"
+
+cpp use "curlwrapper.hpp"
+
+#typedef
+cpp struct getResponse {
+	body:   str
+	status: status::StatusCode
+}
+
+cpp fn get(str): cpp.getResponse
+
+struct getRequest {
+	url:         str
+	mut headers: header::HeaderMap
+}
+
+impl getRequest {
+	fn Send(self): cpp.getResponse {
+		ret cpp.get(self.url)
+	}
+
+	fn Headers(self, headers: header::HeaderMap): getRequest {
+		self.headers = headers
+		ret self
+	}
+}
+
+fn GET(url: str): getRequest {
+	ret getRequest{
+		url: url,
+	}
+}

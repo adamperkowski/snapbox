@@ -1,0 +1,58 @@
+// snapbox
+// HTTP Client Library for Jule
+// https://github.com/adamperkowski/snapbox
+// Copyright (c) 2025, Adam Perkowski
+// BSD 3-Clause License
+
+use "std/testing"
+
+#test
+fn constAccess(t: &testing::T) {
+	t.Assert(IM_A_TEAPOT == 418, "IM_A_TEAPOT is not 418 :(")
+}
+
+#test
+fn informational(t: &testing::T) {
+	t.Assert(IsInformational(CONTINUE), "CONTINUE 100 is not informational")
+	t.Assert(IsInformational(PROCESSING), "PROCESSING 102 is not informational")
+	t.Assert(!IsInformational(OK), "OK 200 is informational")
+	t.Assert(!IsInformational(CREATED), "CREATED 201 is informational")
+}
+
+#test
+fn success(t: &testing::T) {
+	t.Assert(!IsSuccess(CONTINUE), "CONTINUE 100 is success")
+	t.Assert(!IsSuccess(PROCESSING), "PROCESSING 102 is success")
+	t.Assert(IsSuccess(ACCEPTED), "ACCEPTED 202 is not success")
+	t.Assert(IsSuccess(MULTI_STATUS), "MULTI_STATUS 207 is not success")
+	t.Assert(!IsSuccess(MULTIPLE_CHOICES), "MULTIPLE_CHOICES 300 is success")
+	t.Assert(!IsSuccess(MOVED_PERMANENTLY), "MOVED_PERMANENTLY 301 is success")
+}
+
+#test
+fn redirection(t: &testing::T) {
+	t.Assert(!IsRedirection(NO_CONTENT), "NO_CONTENT 204 is redirection")
+	t.Assert(!IsRedirection(RESET_CONTENT), "RESET_CONTENT 205 is redirection")
+	t.Assert(IsRedirection(MOVED_PERMANENTLY), "MOVED_PERMANENTLY 301 is not redirection")
+	t.Assert(IsRedirection(TEMPORARY_REDIRECT), "TEMPORARY_REDIRECT 307 is not redirection")
+	t.Assert(!IsRedirection(BAD_REQUEST), "BAD_REQUEST 400 is redirection")
+	t.Assert(!IsRedirection(GONE), "GONE 410 is redirection")
+}
+
+#test
+fn clientError(t: &testing::T) {
+	t.Assert(!IsClientError(USE_PROXY), "USE_PROXY 305 is client error")
+	t.Assert(!IsClientError(PERMANENT_REDIRECT), "PERMANENT_REDIRECT 308 is client error")
+	t.Assert(IsClientError(IM_A_TEAPOT), "IM_A_TEAPOT 418 is not client error")
+	t.Assert(IsClientError(LOCKED), "LOCKED 423 is not client error")
+	t.Assert(!IsClientError(INTERNAL_SERVER_ERROR), "INTERNAL_SERVER_ERROR 500 is client error")
+	t.Assert(!IsClientError(NOT_IMPLEMENTED), "NOT_IMPLEMENTED 501 is client error")
+}
+
+#test
+fn serverError(t: &testing::T) {
+	t.Assert(!IsServerError(REQUEST_HEADER_FIELDS_TOO_LARGE), "REQUEST_HEADER_FIELDS_TOO_LARGE 431 is server error")
+	t.Assert(!IsServerError(UNAVAILABLE_FOR_LEGAL_REASONS), "UNAVAILABLE_FOR_LEGAL_REASONS 451 is server error")
+	t.Assert(IsServerError(INTERNAL_SERVER_ERROR), "INTERNAL_SERVER_ERROR 500 is not server error")
+	t.Assert(IsServerError(NOT_IMPLEMENTED), "NOT_IMPLEMENTED 501 is not server error")
+}
