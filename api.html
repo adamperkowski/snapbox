@@ -171,6 +171,10 @@
 <code class="language-jule hljs"><span class="hljs-keyword">fn</span> <span class="hljs-function">GET</span>(url<span class="hljs-punctuation">:</span> <span class="hljs-operator">&amp;</span><span class="hljs-type">str</span>)<span class="hljs-punctuation">:</span> <a href="#snapbox-struct-getrequest">getRequest</a>
 </code>
 </div>
+<div id="snapbox-fn-download">
+<code class="language-jule hljs"><span class="hljs-keyword">fn</span> <span class="hljs-function">Download</span>(url<span class="hljs-punctuation">:</span> <span class="hljs-type">str</span><span class="hljs-punctuation">,</span> path<span class="hljs-punctuation">:</span> <span class="hljs-type">str</span>)<span class="hljs-operator">!</span>
+</code>
+</div>
 <hr />
 <div id="snapbox-struct-getrequest">
 <code class="language-jule hljs"><span class="hljs-keyword">struct</span> getRequest {
@@ -197,12 +201,12 @@
 </div>
 <h2 id="snapboxheader"><a class="header" href="#snapboxheader">snapbox/header</a></h2>
 <p>This module includes a collection of <a href="https://github.com/adamperkowski/snapbox/blob/main/snapbox/header/names.jule">HTTP headers constants</a> and types.</p>
-<div id="snapboxheader-type-headername">
-<code class="language-jule hljs"><span class="hljs-keyword">type</span> HeaderName<span class="hljs-punctuation">:</span> <span class="hljs-type">str</span>
+<div id="snapboxheader-type-headermap">
+<code class="language-jule hljs"><span class="hljs-keyword">type</span> HeaderMap<span class="hljs-punctuation">:</span> <span class="hljs-keyword">map</span>[<span class="hljs-type">str</span>]<span class="hljs-type">str</span>
 </code>
 </div>
-<div id="snapboxheader-type-headermap">
-<code class="language-jule hljs"><span class="hljs-keyword">type</span> HeaderMap<span class="hljs-punctuation">:</span> <span class="hljs-keyword">map</span>[<a href="#snapboxheader-type-headername">HeaderName</a>]<span class="hljs-type">str</span>
+<div id="snapboxheader-fn-slice">
+<code class="language-jule hljs"><span class="hljs-keyword">fn</span> <span class="hljs-function">Slice</span>(headers<span class="hljs-punctuation">:</span> <a href="#snapboxheader-type-headermap">HeaderMap</a>)<span class="hljs-punctuation">:</span> []<span class="hljs-type">str</span>
 </code>
 </div>
 <h2 id="snapboxstatus"><a class="header" href="#snapboxstatus">snapbox/status</a></h2>
