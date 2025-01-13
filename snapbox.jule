@@ -18,6 +18,7 @@ cpp struct getResponse {
 }
 
 cpp fn get(str, []str, int): cpp.getResponse
+cpp fn download(str, str): bool
 
 struct getRequest {
 	url:         str
@@ -39,5 +40,12 @@ impl getRequest {
 fn GET(url: str): getRequest {
 	ret getRequest{
 		url: url,
+	}
+}
+
+fn Download(url: str, path: str)! {
+	response := cpp.download(url, path)
+	if !response {
+		panic("Download failed")
 	}
 }

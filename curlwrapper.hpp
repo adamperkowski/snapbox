@@ -15,6 +15,10 @@ size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::string* use
     return size * nmemb;
 }
 
+size_t WriteFileCallback(void* ptr, size_t size, size_t nmemb, FILE* stream) {
+    return fwrite(ptr, size, nmemb, stream);
+}
+
 struct curl_slist* sliceToSlist(const jule::Slice<jule::Str> headersSlice, jule::Int headersLen) {
     struct curl_slist* headers = NULL;
     for (size_t i = 0; i < headersLen; i += 2) {
@@ -40,22 +44,48 @@ getResponse get(const std::string& url, jule::Slice<jule::Str> headers, jule::In
     struct curl_slist* headersList = sliceToSlist(headers, headersLen);
 
     curl = curl_easy_init();
-    if (curl) {
-        curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
-        curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headersList);
-        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
-        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
-
-        res = curl_easy_perform(curl);
-        curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &response.status);
-        curl_easy_cleanup(curl);
-
-        response.body = readBuffer;
-    } else {
+    if (!curl) {
         response.status = 418;
+        return response;
     }
 
+    curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+    curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headersList);
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+
+    res = curl_easy_perform(curl);
+    curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &response.status);
+    curl_easy_cleanup(curl);
+
+    response.body = readBuffer;
+
     return response;
+}
+
+bool download(const std::string& url, const std::string& filename) {
+    CURL* curl = curl_easy_init();
+    if (!curl) {
+        return false;
+    }
+
+    FILE* file = fopen(filename.c_str(), "wb");
+    if (!file) {
+        return false;
+    }
+
+    curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteFileCallback);
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, file);
+
+    curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+
+    curl_easy_perform(curl);
+
+    fclose(file);
+    curl_easy_cleanup(curl);
+
+    return true;
 }
 
 #endif // CURLWRAPPER_HPP

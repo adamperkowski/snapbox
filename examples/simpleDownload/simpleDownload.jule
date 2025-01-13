@@ -1,0 +1,13 @@
+// snapbox
+// HTTP Client Library for Jule
+// https://github.com/adamperkowski/snapbox
+// Copyright (c) 2025, Adam Perkowski
+// BSD 3-Clause License
+
+use snapbox "../.."
+
+fn main() {
+	snapbox::Download("https://httpbin.org/get", "examples/bin/output.txt") else {
+		println(error)
+	}
+}

@@ -12,6 +12,11 @@ The main module. It is a wrapper for the C++ `curl.h` functionality.
 </code>
 </div>
 
+<div id="snapbox-fn-download">
+<code class="language-jule hljs"><span class="hljs-keyword">fn</span> <span class="hljs-function">Download</span>(url<span class="hljs-punctuation">:</span> <span class="hljs-type">str</span><span class="hljs-punctuation">,</span> path<span class="hljs-punctuation">:</span> <span class="hljs-type">str</span>)<span class="hljs-operator">!</span>
+</code>
+</div>
+
 ---
 
 <div id="snapbox-struct-getrequest">

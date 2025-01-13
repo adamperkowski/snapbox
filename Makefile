@@ -9,7 +9,7 @@ JULEFMT = julefmt
 
 NAME = snapbox
 MODULES = status header
-EXAMPLES = simpleGET
+EXAMPLES = simpleGET simpleDownload
 
 examples:
 	mkdir -p examples/bin
