@@ -4,5 +4,17 @@
 // Copyright (c) 2025, Adam Perkowski
 // BSD 3-Clause License
 
-type HeaderName: str
-type HeaderMap: map[HeaderName]str
+use maps "std/maps"
+
+type HeaderMap = map[str]str
+
+fn Slice(headers: HeaderMap): []str {
+	let mut slice: []str = nil
+
+	for _, key in maps::Keys(headers) {
+		slice = append(slice, key)
+		slice = append(slice, headers[key])
+	}
+
+	ret slice
+}

@@ -45,13 +45,13 @@ The main module. It is a wrapper for the C++ `curl.h` functionality.
 ## snapbox/header
 This module includes a collection of [HTTP headers constants] and types.
 
-<div id="snapboxheader-type-headername">
-<code class="language-jule hljs"><span class="hljs-keyword">type</span> HeaderName<span class="hljs-punctuation">:</span> <span class="hljs-type">str</span>
+<div id="snapboxheader-type-headermap">
+<code class="language-jule hljs"><span class="hljs-keyword">type</span> HeaderMap<span class="hljs-punctuation">:</span> <span class="hljs-keyword">map</span>[<span class="hljs-type">str</span>]<span class="hljs-type">str</span>
 </code>
 </div>
 
-<div id="snapboxheader-type-headermap">
-<code class="language-jule hljs"><span class="hljs-keyword">type</span> HeaderMap<span class="hljs-punctuation">:</span> <span class="hljs-keyword">map</span>[<a href="#snapboxheader-type-headername">HeaderName</a>]<span class="hljs-type">str</span>
+<div id="snapboxheader-fn-slice">
+<code class="language-jule hljs"><span class="hljs-keyword">fn</span> <span class="hljs-function">Slice</span>(headers<span class="hljs-punctuation">:</span> <a href="#snapboxheader-type-headermap">HeaderMap</a>)<span class="hljs-punctuation">:</span> []<span class="hljs-type">str</span>
 </code>
 </div>
 

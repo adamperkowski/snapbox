@@ -15,21 +15,34 @@ size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::string* use
     return size * nmemb;
 }
 
+struct curl_slist* sliceToSlist(const jule::Slice<jule::Str> headersSlice, jule::Int headersLen) {
+    struct curl_slist* headers = NULL;
+    for (size_t i = 0; i < headersLen; i += 2) {
+        if (i + 1 < headersLen) {
+            std::string header = headersSlice[i] + ": " + headersSlice[i + 1];
+            headers = curl_slist_append(headers, header.c_str());
+        }
+    }
+    return headers;
+}
+
 struct getResponse {
     std::string body;
     int status;
 };
 
-getResponse get(const std::string& url) {
+getResponse get(const std::string& url, jule::Slice<jule::Str> headers, jule::Int headersLen) {
     CURL* curl;
     CURLcode res;
     std::string readBuffer;
 
     getResponse response;
+    struct curl_slist* headersList = sliceToSlist(headers, headersLen);
 
     curl = curl_easy_init();
     if (curl) {
         curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+        curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headersList);
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
 

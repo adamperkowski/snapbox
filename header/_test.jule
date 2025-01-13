@@ -1,0 +1,25 @@
+// snapbox
+// HTTP Client Library for Jule
+// https://github.com/adamperkowski/snapbox
+// Copyright (c) 2025, Adam Perkowski
+// BSD 3-Clause License
+
+use s "std/slices"
+use "std/testing"
+
+#test
+fn slicing(t: &testing::T) {
+	let headerMap: HeaderMap = {
+		ACCEPT: "application/json",
+		USER_AGENT: "snapbox",
+	}
+
+	let expected: []str = [
+		"User-Agent", "snapbox",
+		"Accept", "application/json",
+	]
+
+	sliced := Slice(headerMap)
+
+	t.Assert(s::Equal(sliced, expected), "sliced HeaderMap does not match expected")
+}

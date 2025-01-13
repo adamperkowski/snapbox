@@ -17,7 +17,7 @@ cpp struct getResponse {
 	status: status::StatusCode
 }
 
-cpp fn get(str): cpp.getResponse
+cpp fn get(str, []str, int): cpp.getResponse
 
 struct getRequest {
 	url:         str
@@ -26,7 +26,8 @@ struct getRequest {
 
 impl getRequest {
 	fn Send(self): cpp.getResponse {
-		ret cpp.get(self.url)
+		headers := header::Slice(self.headers)
+		ret cpp.get(self.url, headers, len(headers))
 	}
 
 	fn Headers(self, headers: header::HeaderMap): getRequest {
