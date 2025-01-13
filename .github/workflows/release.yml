@@ -46,10 +46,7 @@ jobs:
 
       - name: Prepare files
         run: |
-          cp LICENSE snapbox/LICENSE
-          cp CHANGELOG.md snapbox/CHANGELOG.md
-          tar -czf snapbox-${{ github.event.inputs.version }}.tar.gz snapbox
-          zip -r snapbox-${{ github.event.inputs.version }}.zip snapbox
+          VERSION=${{ github.event.inputs.version }} make package
 
       - name: Release
         uses: softprops/action-gh-release@v2

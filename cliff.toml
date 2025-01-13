@@ -3,7 +3,7 @@
 [changelog]
 header = """
 # Changelog\n
-All notable changes to jule.nvim will be documented in this file.\n
+All notable changes to snapbox will be documented in this file.\n
 """
 body = """
 {% if version %}\
@@ -25,7 +25,7 @@ footer = """
 """
 trim = true
 postprocessors = [
-  { pattern = '<REPO>', replace = "https://github.com/julelang/jule.nvim" },
+  { pattern = '<REPO>', replace = "https://github.com/adamperkowski/snapbox" },
 ]
 [git]
 conventional_commits = true

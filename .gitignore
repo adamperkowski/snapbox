@@ -1,3 +1,6 @@
+snapbox
+**/*.tar.gz
+**/*.zip
 **/*.out
 **/dist
 **/bin

@@ -10,6 +10,7 @@ JULEFMT = julefmt
 NAME = snapbox
 MODULES = status header
 EXAMPLES = simpleGET simpleDownload
+LIB = $(NAME).jule $(MODULES) curlwrapper.hpp jule.mod LICENSE README.md
 
 examples:
 	mkdir -p examples/bin
@@ -39,7 +40,13 @@ test:
 		./bin/$$module; \
 	done
 
+package:
+	mkdir -p $(NAME)
+	cp -R $(LIB) $(NAME)
+	tar -czf $(NAME)-$(VERSION).tar.gz $(NAME)
+	zip -r $(NAME)-$(VERSION).zip $(NAME)
+
 clean:
-	rm -rf bin examples/bin
+	rm -rf bin examples/bin $(NAME) *.tar.gz *.zip
 
 .PHONY: examples format test clean
