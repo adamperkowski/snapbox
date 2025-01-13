@@ -33,7 +33,7 @@ jobs:
           git add CHANGELOG.md
           git commit -m "chore(release): prepare for ${{ github.event.inputs.version }}"
           git tag -a ${{ github.event.inputs.version }} -m "${{ github.event.inputs.version }}"
-          git push https://${{ secrets.GH_TOKEN }}@github.com/adamperkowski/snapbox.git ${{ github.event.inputs.version }}
+          git push https://${{ secrets.GH_TOKEN }}@github.com/adamperkowski/snapbox.git HEAD:refs/heads/main --follow-tags
 
   release:
     runs-on: ubuntu-latest
