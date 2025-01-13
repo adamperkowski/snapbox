@@ -1,4 +1,8 @@
 # API Reference
+
+**This document is written manually.<br>
+It might be unaccurate or outdated until [JuleDoc](https://github.com/julelang/jule/issues/126) is released.**
+
 List of modules available in snapbox:
 - [snapbox](#snapbox)
 - [snapbox/header](#snapboxheader)
