@@ -21,9 +21,9 @@ examples:
 	done
 
 format:
-	$(JULEFMT) -w $(NAME)
+	$(JULEFMT) -w .
 	@for module in $(MODULES); do \
-		$(JULEFMT) -w $(NAME)/$$module; \
+		$(JULEFMT) -w $$module; \
 	done
 	@for example in $(EXAMPLES); do \
 		$(JULEFMT) -w examples/$$example; \
@@ -31,11 +31,11 @@ format:
 
 test:
 	mkdir -p bin
-	$(JULEC) test $(NAME) -o bin/$(NAME)
+	$(JULEC) test . -o bin/$(NAME)
 	./bin/$(NAME)
 	@for module in $(MODULES); do \
 		echo "Testing $(NAME)/$$module..."; \
-		$(JULEC) test $(NAME)/$$module -o bin/$$module; \
+		$(JULEC) test $$module -o bin/$$module; \
 		./bin/$$module; \
 	done
 
