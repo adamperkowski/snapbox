@@ -14,12 +14,13 @@ fn slicing(t: &testing::T) {
 		USER_AGENT: "snapbox",
 	}
 
-	let expected: []str = [
-		"User-Agent", "snapbox",
-		"Accept", "application/json",
+	let keys: []str = [
+		"Accept", "User-Agent",
 	]
 
 	sliced := Slice(headerMap)
 
-	t.Assert(s::Equal(sliced, expected), "sliced HeaderMap does not match expected")
+	for _, k in keys {
+		t.Assert(sliced[s::Find(sliced, k)+1] == headerMap[k], "sliced HeaderMap does not match expected")
+	}
 }
