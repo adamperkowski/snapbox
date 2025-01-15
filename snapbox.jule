@@ -17,20 +17,25 @@ cpp struct getResponse {
 	status: status::StatusCode
 }
 
+// args: url, headers, headerCount, isHead
 cpp fn get(str, []str, int, bool): cpp.getResponse
-cpp fn post(str, str, []str, int): cpp.getResponse
+
+// args: url, data, headers, headerCount, isPut
+cpp fn post(str, str, []str, int, bool): cpp.getResponse
+
+// args: url, path
 cpp fn download(str, str): bool
 
 struct getRequest {
 	url:         str
 	mut headers: header::HeaderMap
-	head:        bool
+	isHead:      bool
 }
 
 impl getRequest {
 	fn Send(self): cpp.getResponse {
 		headers := header::Slice(self.headers)
-		ret cpp.get(self.url, headers, len(headers), self.head)
+		ret cpp.get(self.url, headers, len(headers), self.isHead)
 	}
 
 	fn Headers(self, headers: header::HeaderMap): getRequest {
@@ -43,12 +48,13 @@ struct postRequest {
 	url:         str
 	mut data:    str
 	mut headers: header::HeaderMap
+	isPut:       bool
 }
 
 impl postRequest {
 	fn Send(self): cpp.getResponse {
 		headers := header::Slice(self.headers)
-		ret cpp.post(self.url, self.data, headers, len(headers))
+		ret cpp.post(self.url, self.data, headers, len(headers), self.isPut)
 	}
 
 	fn Headers(self, headers: header::HeaderMap): postRequest {
@@ -65,20 +71,28 @@ impl postRequest {
 fn GET(url: str): getRequest {
 	ret getRequest{
 		url: url,
-		head: false,
+		isHead: false,
 	}
 }
 
 fn HEAD(url: str): getRequest {
 	ret getRequest{
 		url: url,
-		head: true,
+		isHead: true,
 	}
 }
 
 fn POST(url: str): postRequest {
 	ret postRequest{
 		url: url,
+		isPut: false,
+	}
+}
+
+fn PUT(url: str): postRequest {
+	ret postRequest{
+		url: url,
+		isPut: true,
 	}
 }
 

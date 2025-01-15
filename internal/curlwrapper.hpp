@@ -35,7 +35,7 @@ struct getResponse {
     int status;
 };
 
-getResponse get(const std::string& url, jule::Slice<jule::Str> headers, jule::Int headersLen, bool head) {
+getResponse get(const std::string& url, jule::Slice<jule::Str> headers, jule::Int headersLen, bool isHead) {
     CURL* curl;
     CURLcode res;
     std::string readBuffer;
@@ -52,7 +52,7 @@ getResponse get(const std::string& url, jule::Slice<jule::Str> headers, jule::In
     curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headersList);
 
-    if (head) {
+    if (isHead) {
         curl_easy_setopt(curl, CURLOPT_NOBODY, 1L);
     } else {
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
@@ -63,14 +63,14 @@ getResponse get(const std::string& url, jule::Slice<jule::Str> headers, jule::In
     curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &response.status);
     curl_easy_cleanup(curl);
 
-    if (!head) {
+    if (!isHead) {
         response.body = readBuffer;
     }
 
     return response;
 }
 
-getResponse post(const std::string& url, const std::string& data, jule::Slice<jule::Str> headers, jule::Int headersLen) {
+getResponse post(const std::string& url, const std::string& data, jule::Slice<jule::Str> headers, jule::Int headersLen, bool isPut) {
     CURL* curl;
     CURLcode res;
     std::string readBuffer;
@@ -86,7 +86,13 @@ getResponse post(const std::string& url, const std::string& data, jule::Slice<ju
 
     curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headersList);
-    curl_easy_setopt(curl, CURLOPT_POST, 1L);
+
+    if (isPut) {
+        curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "PUT");
+    } else {
+        curl_easy_setopt(curl, CURLOPT_POST, 1L);
+    }
+
     curl_easy_setopt(curl, CURLOPT_POSTFIELDS, data.c_str());
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
