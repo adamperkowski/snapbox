@@ -186,33 +186,66 @@ cd ..
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="usage-examples"><a class="header" href="#usage-examples">Usage Examples</a></h1>
 <p>Below are some simple examples of how to use snapbox.</p>
-<h2 id="get-request"><a class="header" href="#get-request">GET Request</a></h2>
-<pre><code class="language-jule">// main.jule
-
+<h2 id="basic-requests"><a class="header" href="#basic-requests">Basic Requests</a></h2>
+<pre><code class="language-jule">// get.jule
 use "snapbox"
 use "snapbox/header"
 use "snapbox/status"
-use "std/os"
 
 fn main() {
-    let headerMap: header::HeaderMap = {
-        header::ACCEPT: "application/json"
-    }
+        let headerMap: header::HeaderMap = {
+                header::ACCEPT: "application/json",
+        }
 
-    request := snapbox::GET("https://httpbin.org/get").Headers(headerMap)
-    response := request.Send()
+        request := snapbox::GET("https://httpbin.org/get").Headers(headerMap)
+        response := request.Send()
 
-    if !status::IsSuccess(response.status) {
-        print("Request failed with code: ")
-        println(response.status)
-        os::Exit(1)
-    }
+        if !status::IsSuccess(response.status) {
+                println("Error: ")
+                println(response.status)
+        }
 
-    print(response.body)
+        print(response.body)
+}
+
+// post.jule
+use "snapbox"
+use "snapbox/header"
+use "snapbox/status"
+
+const DATA = "Hello, World!"
+
+fn main() {
+        let headerMap: header::HeaderMap = {
+                header::ACCEPT: "application/json",
+                header::CONTENT_TYPE: "text/plain",
+        }
+
+        request := snapbox::POST("https://httpbin.org/post").Data(DATA).Headers(headerMap)
+        response := request.Send()
+
+        if !status::IsSuccess(response.status) {
+                println("Error: ")
+                println(response.status)
+        }
+
+        print(response.body)
+}
+</code></pre>
+<h2 id="file-downloading"><a class="header" href="#file-downloading">File Downloading</a></h2>
+<pre><code class="language-jule">// download.jule
+use "snapbox"
+
+fn main() {
+        snapbox::Download("https://httpbin.org/get", "output.txt") else {
+                println(error)
+        }
 }
 </code></pre>
 <p>See the <a href="https://github.com/adamperkowski/snapbox/tree/main/examples">examples directory</a> for a full list of examples.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="api-reference"><a class="header" href="#api-reference">API Reference</a></h1>
+<p><strong>This document is written manually.<br>
+It might be unaccurate or outdated until <a href="https://github.com/julelang/jule/issues/126">JuleDoc</a> is released.</strong></p>
 <p>List of modules available in snapbox:</p>
 <ul>
 <li><a href="api.html#snapbox">snapbox</a></li>
