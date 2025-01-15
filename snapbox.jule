@@ -18,6 +18,7 @@ cpp struct getResponse {
 }
 
 cpp fn get(str, []str, int, bool): cpp.getResponse
+cpp fn post(str, str, []str, int): cpp.getResponse
 cpp fn download(str, str): bool
 
 struct getRequest {
@@ -38,6 +39,29 @@ impl getRequest {
 	}
 }
 
+struct postRequest {
+	url:         str
+	mut data:    str
+	mut headers: header::HeaderMap
+}
+
+impl postRequest {
+	fn Send(self): cpp.getResponse {
+		headers := header::Slice(self.headers)
+		ret cpp.post(self.url, self.data, headers, len(headers))
+	}
+
+	fn Headers(self, headers: header::HeaderMap): postRequest {
+		self.headers = headers
+		ret self
+	}
+
+	fn Data(self, data: str): postRequest {
+		self.data = data
+		ret self
+	}
+}
+
 fn GET(url: str): getRequest {
 	ret getRequest{
 		url: url,
@@ -49,6 +73,12 @@ fn HEAD(url: str): getRequest {
 	ret getRequest{
 		url: url,
 		head: true,
+	}
+}
+
+fn POST(url: str): postRequest {
+	ret postRequest{
+		url: url,
 	}
 }
 

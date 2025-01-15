@@ -1,0 +1,31 @@
+// snapbox
+// HTTP Client Library for Jule
+// https://github.com/adamperkowski/snapbox
+// Copyright (c) 2025, Adam Perkowski
+// BSD 3-Clause License
+
+use snapbox "../.."
+use "../../header"
+use "../../status"
+
+const DATA = "Hello, World!"
+
+fn main() {
+	let headerMap: header::HeaderMap = {
+		header::ACCEPT: "application/json",
+		header::CONTENT_TYPE: "text/plain",
+	}
+
+	request := snapbox::POST("https://httpbin.org/post").Data(DATA).Headers(headerMap)
+	response := request.Send()
+
+	handleStatus(response.status)!
+
+	print(response.body)
+}
+
+fn handleStatus(code: status::StatusCode)! {
+	if !status::IsSuccess(code) {
+		error(code)
+	}
+}

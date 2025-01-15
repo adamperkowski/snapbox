@@ -9,7 +9,7 @@ JULEFMT = julefmt
 
 NAME = snapbox
 MODULES = status header
-EXAMPLES = simpleGET simpleHEAD simpleDownload
+EXAMPLES = simpleGET simpleHEAD simplePOST simpleDownload
 LIB = $(NAME).jule $(MODULES) curlwrapper.hpp jule.mod LICENSE README.md
 
 examples:
