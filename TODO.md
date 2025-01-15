@@ -1,6 +1,5 @@
 TODO
 - implement all request types
-- - DELETE
 - - CONNECT (very, very low priority)
 - - OPTIONS
 - - TRACE

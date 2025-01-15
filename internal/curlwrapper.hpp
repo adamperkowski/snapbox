@@ -30,17 +30,17 @@ struct curl_slist* sliceToSlist(const jule::Slice<jule::Str> headersSlice, jule:
     return headers;
 }
 
-struct getResponse {
+struct response {
     std::string body;
     int status;
 };
 
-getResponse get(const std::string& url, jule::Slice<jule::Str> headers, jule::Int headersLen, bool isHead) {
+response request(const std::string& url, jule::Slice<jule::Str> headers, jule::Int headersLen, jule::Int method) {
     CURL* curl;
     CURLcode res;
     std::string readBuffer;
 
-    getResponse response;
+    response response;
     struct curl_slist* headersList = sliceToSlist(headers, headersLen);
 
     curl = curl_easy_init();
@@ -52,30 +52,30 @@ getResponse get(const std::string& url, jule::Slice<jule::Str> headers, jule::In
     curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headersList);
 
-    if (isHead) {
-        curl_easy_setopt(curl, CURLOPT_NOBODY, 1L);
-    } else {
+    if (method == 0) { // GET
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+    } else if (method == 1) { // HEAD
+        curl_easy_setopt(curl, CURLOPT_NOBODY, 1L);
     }
 
     res = curl_easy_perform(curl);
     curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &response.status);
     curl_easy_cleanup(curl);
 
-    if (!isHead) {
+    if (method == 0) { // GET
         response.body = readBuffer;
     }
 
     return response;
 }
 
-getResponse post(const std::string& url, const std::string& data, jule::Slice<jule::Str> headers, jule::Int headersLen, bool isPut) {
+response post(const std::string& url, const std::string& data, jule::Slice<jule::Str> headers, jule::Int headersLen, jule::Int method) {
     CURL* curl;
     CURLcode res;
     std::string readBuffer;
 
-    getResponse response;
+    response response;
     struct curl_slist* headersList = sliceToSlist(headers, headersLen);
 
     curl = curl_easy_init();
@@ -87,10 +87,12 @@ getResponse post(const std::string& url, const std::string& data, jule::Slice<ju
     curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headersList);
 
-    if (isPut) {
-        curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "PUT");
-    } else {
+    if (method == 0) { // POST
         curl_easy_setopt(curl, CURLOPT_POST, 1L);
+    } else if (method == 1) { // PUT
+        curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "PUT");
+    } else if (method == 2) { // DELETE
+        curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "DELETE");
     }
 
     curl_easy_setopt(curl, CURLOPT_POSTFIELDS, data.c_str());

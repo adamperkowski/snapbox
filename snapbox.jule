@@ -12,33 +12,33 @@ use "status"
 cpp use "internal/curlwrapper.hpp"
 
 #typedef
-cpp struct getResponse {
+cpp struct response {
 	body:   str
 	status: status::StatusCode
 }
 
-// args: url, headers, headerCount, isHead
-cpp fn get(str, []str, int, bool): cpp.getResponse
+// args: url, headers, headerCount, method
+cpp fn request(str, []str, int, int): cpp.response
 
-// args: url, data, headers, headerCount, isPut
-cpp fn post(str, str, []str, int, bool): cpp.getResponse
+// args: url, data, headers, headerCount, method
+cpp fn post(str, str, []str, int, int): cpp.response
 
 // args: url, path
 cpp fn download(str, str): bool
 
-struct getRequest {
+struct request {
 	url:         str
 	mut headers: header::HeaderMap
-	isHead:      bool
+	method:      int // 0 = GET, 1 = HEAD
 }
 
-impl getRequest {
-	fn Send(self): cpp.getResponse {
+impl request {
+	fn Send(self): cpp.response {
 		headers := header::Slice(self.headers)
-		ret cpp.get(self.url, headers, len(headers), self.isHead)
+		ret cpp.request(self.url, headers, len(headers), self.method)
 	}
 
-	fn Headers(self, headers: header::HeaderMap): getRequest {
+	fn Headers(self, headers: header::HeaderMap): request {
 		self.headers = headers
 		ret self
 	}
@@ -48,13 +48,13 @@ struct postRequest {
 	url:         str
 	mut data:    str
 	mut headers: header::HeaderMap
-	isPut:       bool
+	method:      int // 0 = POST, 1 = PUT, 2 = DELETE
 }
 
 impl postRequest {
-	fn Send(self): cpp.getResponse {
+	fn Send(self): cpp.response {
 		headers := header::Slice(self.headers)
-		ret cpp.post(self.url, self.data, headers, len(headers), self.isPut)
+		ret cpp.post(self.url, self.data, headers, len(headers), self.method)
 	}
 
 	fn Headers(self, headers: header::HeaderMap): postRequest {
@@ -68,31 +68,38 @@ impl postRequest {
 	}
 }
 
-fn GET(url: str): getRequest {
-	ret getRequest{
+fn GET(url: str): request {
+	ret request{
 		url: url,
-		isHead: false,
+		method: 0,
 	}
 }
 
-fn HEAD(url: str): getRequest {
-	ret getRequest{
+fn HEAD(url: str): request {
+	ret request{
 		url: url,
-		isHead: true,
+		method: 1,
 	}
 }
 
 fn POST(url: str): postRequest {
 	ret postRequest{
 		url: url,
-		isPut: false,
+		method: 0,
 	}
 }
 
 fn PUT(url: str): postRequest {
 	ret postRequest{
 		url: url,
-		isPut: true,
+		method: 1,
+	}
+}
+
+fn DELETE(url: str): postRequest {
+	ret postRequest{
+		url: url,
+		method: 2,
 	}
 }
 
