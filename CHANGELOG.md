@@ -2,6 +2,31 @@
 
 All notable changes to snapbox will be documented in this file.
 
+## [0.0.2] - 2025-01-15
+
+### 🚀 Features
+
+- *(request)* HEAD ([dd05fb6](https://github.com/adamperkowski/snapbox/commit/dd05fb671f931ff1c989b12483cafd7b5409e076))
+- *(request)* POST ([aba86de](https://github.com/adamperkowski/snapbox/commit/aba86deba6df8cf93c0b3c655e3c443f27186390))
+- *(request)* PUT ([da4203a](https://github.com/adamperkowski/snapbox/commit/da4203a65e1efb5114c981a8d48eaf5a3a64d273))
+- *(request)* DELETE ([e9455d5](https://github.com/adamperkowski/snapbox/commit/e9455d5925b6621b04059bf18e7fc377ace640cb))
+
+### 🛠️ Refactoring
+
+- move C++ code to `internal` ([c98186d](https://github.com/adamperkowski/snapbox/commit/c98186d76edefcadd98f7c98fa46610766921a26))
+
+### 📚 Documentation
+
+- *(api)* add juledoc notice ([bd8d500](https://github.com/adamperkowski/snapbox/commit/bd8d500d934a6db55b063d5b13e13f419e5607fa))
+
+### 🧪 Testing
+
+- improve the slicing test ([6b5f5c3](https://github.com/adamperkowski/snapbox/commit/6b5f5c31a7ad1fa81a5b8dfba0a1631d126c102d))
+
+### ⚙️ Miscellaneous Tasks
+
+- add a todo ([72d756d](https://github.com/adamperkowski/snapbox/commit/72d756d5042556c84f8b362b5e372221488c772f))
+
 ## [0.0.1] - 2025-01-13
 
 ### 🚀 Features
