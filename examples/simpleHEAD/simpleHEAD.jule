@@ -1,0 +1,22 @@
+// snapbox
+// HTTP Client Library for Jule
+// https://github.com/adamperkowski/snapbox
+// Copyright (c) 2025, Adam Perkowski
+// BSD 3-Clause License
+
+use snapbox "../.."
+use "../../header"
+use "../../status"
+
+fn main() {
+	let headerMap: header::HeaderMap = {
+		header::USER_AGENT: "snapbox-test",
+	}
+
+	request := snapbox::HEAD("https://httpbin.org/get").Headers(headerMap)
+	response := request.Send()
+
+	// body is always empty for HEAD
+
+	println(response.status)
+}

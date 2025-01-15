@@ -35,7 +35,7 @@ struct getResponse {
     int status;
 };
 
-getResponse get(const std::string& url, jule::Slice<jule::Str> headers, jule::Int headersLen) {
+getResponse get(const std::string& url, jule::Slice<jule::Str> headers, jule::Int headersLen, bool head) {
     CURL* curl;
     CURLcode res;
     std::string readBuffer;
@@ -51,14 +51,21 @@ getResponse get(const std::string& url, jule::Slice<jule::Str> headers, jule::In
 
     curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headersList);
-    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
-    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+
+    if (head) {
+        curl_easy_setopt(curl, CURLOPT_NOBODY, 1L);
+    } else {
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+    }
 
     res = curl_easy_perform(curl);
     curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &response.status);
     curl_easy_cleanup(curl);
 
-    response.body = readBuffer;
+    if (!head) {
+        response.body = readBuffer;
+    }
 
     return response;
 }
