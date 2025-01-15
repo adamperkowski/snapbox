@@ -1,0 +1,12 @@
+TODO
+- implement all request types
+- - DELETE
+- - CONNECT (very, very low priority)
+- - OPTIONS
+- - TRACE
+- - PATCH
+- implement connections & tunneling (CONNECT) (very, very low priority)
+- implement file uploading
+- implement forms
+- create a builder for args (`url?key0=value0&key1=value1`) (very low priority)
+- implement cookies (very low priority)
