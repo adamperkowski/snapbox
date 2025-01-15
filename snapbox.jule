@@ -9,7 +9,7 @@
 use "header"
 use "status"
 
-cpp use "curlwrapper.hpp"
+cpp use "internal/curlwrapper.hpp"
 
 #typedef
 cpp struct getResponse {
