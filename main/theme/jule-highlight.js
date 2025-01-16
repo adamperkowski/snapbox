@@ -6,12 +6,12 @@ hljs.registerLanguage('jule', (hljs) => ({
     aliases: ['jule'],
     keywords: {
       keyword:
-        'chan map error use fn struct byte rune enum unsafe const let static match defer if else for in impl trait break continue goto cpp type ret fall co let select',
+        'chan map error use fn struct byte rune enum unsafe let match defer if else for in impl trait break continue goto cpp type ret fall co let select',
       type:
         'int uint uintptr i8 i16 i32 i64 u8 u16 u32 u64 f32 f64 bool str any byte rune',
-      storage:
-        'static const mut pub self',
       constant:
+        'static const mut self',
+      literal:
         'true false nil',
     },
     contains: [
