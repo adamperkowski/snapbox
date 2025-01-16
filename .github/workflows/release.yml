@@ -25,12 +25,35 @@ jobs:
         env:
           OUTPUT: CHANGELOG.md
 
+      - name:  Install JuleC
+        uses: Panquesito7/setup-jule@v1.1.3
+        with:
+          version: latest
+          directory: .julec
+          add-to-path: true
+
+      - name: Install JuleDoc
+        run: |
+          git clone https://github.com/julelang/juledoc.git --depth=1 .juledoc
+          cd .juledoc
+          mkdir -p bin
+          julec --opt-deadcode -o bin/juledoc ./src
+          echo "$(pwd)/bin" >> $GITHUB_PATH
+          cd ..
+
+      - name: Generate API documentation
+        run: make doc
+
+      - name: Clean up
+        run: |
+          rm -rf .julec .juledoc **/.*out **/bin
+
       - name: Commit and tag
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
           set +e
-          git add CHANGELOG.md
+          git add CHANGELOG.md book
           git commit -m "chore(release): prepare for ${{ github.event.inputs.version }}"
           git tag -a ${{ github.event.inputs.version }} -m "${{ github.event.inputs.version }}"
           git push https://${{ secrets.GH_TOKEN }}@github.com/adamperkowski/snapbox.git HEAD:refs/heads/main --follow-tags

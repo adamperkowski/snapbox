@@ -6,6 +6,7 @@
 
 JULEC = julec
 JULEFMT = julefmt
+JULEDOC = juledoc
 
 NAME = snapbox
 MODULES = status header
@@ -40,6 +41,14 @@ test:
 		./bin/$$module; \
 	done
 
+doc:
+	sed -i '/# API Reference/,$$d' book/src/SUMMARY.md;
+	echo '# API Reference' >> book/src/SUMMARY.md;
+	@for module in $(MODULES); do \
+		$(JULEDOC) $$module; \
+		mv output.md book/src/api/$$module.md; \
+		echo "- [$$module](./api/$$module.md)" >> book/src/SUMMARY.md; \
+	done
 package:
 	mkdir -p $(NAME)
 	cp -R $(LIB) $(NAME)
