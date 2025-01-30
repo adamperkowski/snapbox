@@ -17,11 +17,11 @@ cpp struct response {
 	status: status::StatusCode
 }
 
-// args: url, headers, headerCount, method
-cpp fn request(str, []str, int, int): cpp.response
+// args: url, headers, method
+cpp fn request(str, []str, int): cpp.response
 
-// args: url, data, headers, headerCount, method
-cpp fn post(str, str, []str, int, int): cpp.response
+// args: url, data, headers, method
+cpp fn post(str, str, []str, int): cpp.response
 
 // args: url, path
 cpp fn download(str, str): bool
@@ -35,7 +35,7 @@ struct request {
 impl request {
 	fn Send(self): cpp.response {
 		headers := header::Slice(self.headers)
-		ret cpp.request(self.url, headers, len(headers), self.method)
+		ret cpp.request(self.url, headers, self.method)
 	}
 
 	fn Headers(self, headers: header::HeaderMap): request {
@@ -54,7 +54,7 @@ struct postRequest {
 impl postRequest {
 	fn Send(self): cpp.response {
 		headers := header::Slice(self.headers)
-		ret cpp.post(self.url, self.data, headers, len(headers), self.method)
+		ret cpp.post(self.url, self.data, headers, self.method)
 	}
 
 	fn Headers(self, headers: header::HeaderMap): postRequest {

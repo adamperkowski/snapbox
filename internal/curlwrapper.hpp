@@ -19,11 +19,20 @@ size_t WriteFileCallback(void* ptr, size_t size, size_t nmemb, FILE* stream) {
     return fwrite(ptr, size, nmemb, stream);
 }
 
-struct curl_slist* sliceToSlist(const jule::Slice<jule::Str> headersSlice, jule::Int headersLen) {
+std::string strToString(jule::Str str) {
+    std::string result = "";
+    for (jule::U8& c : str) {
+        result += c;
+    }
+    return result;
+}
+
+struct curl_slist* sliceToSlist(const jule::Slice<jule::Str> headersSlice) {
     struct curl_slist* headers = NULL;
+    const int headersLen = headersSlice.len();
     for (size_t i = 0; i < headersLen; i += 2) {
         if (i + 1 < headersLen) {
-            std::string header = headersSlice[i] + ": " + headersSlice[i + 1];
+            std::string header = strToString(headersSlice[i]) + ": " + strToString(headersSlice[i + 1]);
             headers = curl_slist_append(headers, header.c_str());
         }
     }
@@ -31,17 +40,17 @@ struct curl_slist* sliceToSlist(const jule::Slice<jule::Str> headersSlice, jule:
 }
 
 struct response {
-    std::string body;
-    int status;
+    jule::Str body;
+    jule::Int status;
 };
 
-response request(const std::string& url, jule::Slice<jule::Str> headers, jule::Int headersLen, jule::Int method) {
+response request(const char *url, const jule::Slice<jule::Str> headers, const jule::Int method) {
     CURL* curl;
     CURLcode res;
     std::string readBuffer;
 
     response response;
-    struct curl_slist* headersList = sliceToSlist(headers, headersLen);
+    struct curl_slist* headersList = sliceToSlist(headers);
 
     curl = curl_easy_init();
     if (!curl) {
@@ -49,7 +58,7 @@ response request(const std::string& url, jule::Slice<jule::Str> headers, jule::I
         return response;
     }
 
-    curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+    curl_easy_setopt(curl, CURLOPT_URL, url);
     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headersList);
 
     if (method == 0) { // GET
@@ -70,13 +79,13 @@ response request(const std::string& url, jule::Slice<jule::Str> headers, jule::I
     return response;
 }
 
-response post(const std::string& url, const std::string& data, jule::Slice<jule::Str> headers, jule::Int headersLen, jule::Int method) {
+response post(const char *url, const char *data, const jule::Slice<jule::Str> headers, const jule::Int method) {
     CURL* curl;
     CURLcode res;
     std::string readBuffer;
 
     response response;
-    struct curl_slist* headersList = sliceToSlist(headers, headersLen);
+    struct curl_slist* headersList = sliceToSlist(headers);
 
     curl = curl_easy_init();
     if (!curl) {
@@ -84,7 +93,7 @@ response post(const std::string& url, const std::string& data, jule::Slice<jule:
         return response;
     }
 
-    curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+    curl_easy_setopt(curl, CURLOPT_URL, url);
     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headersList);
 
     if (method == 0) { // POST
@@ -95,7 +104,9 @@ response post(const std::string& url, const std::string& data, jule::Slice<jule:
         curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "DELETE");
     }
 
-    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, data.c_str());
+    if (data) {
+        curl_easy_setopt(curl, CURLOPT_POSTFIELDS, data);
+    }
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
 
@@ -108,18 +119,18 @@ response post(const std::string& url, const std::string& data, jule::Slice<jule:
     return response;
 }
 
-bool download(const std::string& url, const std::string& filename) {
+bool download(jule::Str url, jule::Str filename) {
     CURL* curl = curl_easy_init();
     if (!curl) {
         return false;
     }
 
-    FILE* file = fopen(filename.c_str(), "wb");
+    FILE* file = fopen(strToString(filename).c_str(), "wb");
     if (!file) {
         return false;
     }
 
-    curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+    curl_easy_setopt(curl, CURLOPT_URL, strToString(url).c_str());
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteFileCallback);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, file);
 
