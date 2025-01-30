@@ -9,6 +9,10 @@ HTTP Client Library for Jule
 
 </div>
 
+Supported Jule Versions:
+- `jule0.1.2`
+- `jule0.1.3 @master`
+
 ## Features
 Currently fully supported request methods:
 - GET

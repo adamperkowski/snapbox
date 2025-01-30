@@ -1,6 +1,6 @@
 snapbox
-doc.md
-output*
+doc.*
+output.*
 **/*.tar.gz
 **/*.zip
 **/*.out

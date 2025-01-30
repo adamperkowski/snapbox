@@ -1,8 +1,10 @@
-// snapbox
-// HTTP Client Library for Jule
-// https://github.com/adamperkowski/snapbox
-// Copyright (c) 2025, Adam Perkowski
-// BSD 3-Clause License
+/*
+snapbox
+HTTP Client Library for Jule
+https://github.com/adamperkowski/snapbox
+Copyright (c) 2025, Adam Perkowski
+BSD 3-Clause License
+*/
 
 #pass "-lcurl"
 
@@ -12,97 +14,110 @@ use "status"
 cpp use "internal/curlwrapper.hpp"
 
 #typedef
-cpp struct response {
+cpp struct Response {
 	body:   str
 	status: status::StatusCode
 }
 
-// args: url, headers, method
-cpp fn request(str, []str, int): cpp.response
+/* args: url, headers, method */
+cpp fn request(str, []str, int): cpp.Response
 
-// args: url, data, headers, method
-cpp fn post(str, str, []str, int): cpp.response
+/* args: url, data, headers, method */
+cpp fn post(str, str, []str, int): cpp.Response
 
-// args: url, path
+/* args: url, path */
 cpp fn download(str, str): bool
 
-struct request {
+// Request structure for non-data requests.
+struct Request {
 	url:         str
 	mut headers: header::HeaderMap
 	method:      int // 0 = GET, 1 = HEAD
 }
 
-impl request {
-	fn Send(self): cpp.response {
+impl Request {
+	// Executes the request and returns the response.
+	fn Send(self): cpp.Response {
 		headers := header::Slice(self.headers)
 		ret cpp.request(self.url, headers, self.method)
 	}
 
-	fn Headers(self, headers: header::HeaderMap): request {
+	// Sets headers for the request.
+	fn Headers(self, headers: header::HeaderMap): Request {
 		self.headers = headers
 		ret self
 	}
 }
 
-struct postRequest {
+// Request structure for data requests.
+struct DataRequest {
 	url:         str
 	mut data:    str
 	mut headers: header::HeaderMap
 	method:      int // 0 = POST, 1 = PUT, 2 = DELETE
 }
 
-impl postRequest {
-	fn Send(self): cpp.response {
+impl DataRequest {
+	// Executes the request and returns the response.
+	fn Send(self): cpp.Response {
 		headers := header::Slice(self.headers)
 		ret cpp.post(self.url, self.data, headers, self.method)
 	}
 
-	fn Headers(self, headers: header::HeaderMap): postRequest {
+	// Sets headers for the request.
+	fn Headers(self, headers: header::HeaderMap): DataRequest {
 		self.headers = headers
 		ret self
 	}
 
-	fn Data(self, data: str): postRequest {
+	// Sets data for the request.
+	fn Data(self, data: str): DataRequest {
 		self.data = data
 		ret self
 	}
 }
 
-fn GET(url: str): request {
-	ret request{
+// Builds a GET request object.
+fn GET(url: str): Request {
+	ret Request{
 		url: url,
 		method: 0,
 	}
 }
 
-fn HEAD(url: str): request {
-	ret request{
+// Builds a HEAD request object.
+fn HEAD(url: str): Request {
+	ret Request{
 		url: url,
 		method: 1,
 	}
 }
 
-fn POST(url: str): postRequest {
-	ret postRequest{
+// Builds a POST request object.
+fn POST(url: str): DataRequest {
+	ret DataRequest{
 		url: url,
 		method: 0,
 	}
 }
 
-fn PUT(url: str): postRequest {
-	ret postRequest{
+// Builds a PUT request object.
+fn PUT(url: str): DataRequest {
+	ret DataRequest{
 		url: url,
 		method: 1,
 	}
 }
 
-fn DELETE(url: str): postRequest {
-	ret postRequest{
+// Builds a DELETE request object.
+fn DELETE(url: str): DataRequest {
+	ret DataRequest{
 		url: url,
 		method: 2,
 	}
 }
 
+// Uses the internal C++ function to download a file from the given URL and save it to the given path.
 fn Download(url: str, path: str)! {
 	response := cpp.download(url, path)
 	if !response {

@@ -1,13 +1,17 @@
-// snapbox
-// HTTP Client Library for Jule
-// https://github.com/adamperkowski/snapbox
-// Copyright (c) 2025, Adam Perkowski
-// BSD 3-Clause License
+/*
+snapbox
+HTTP Client Library for Jule
+https://github.com/adamperkowski/snapbox
+Copyright (c) 2025, Adam Perkowski
+BSD 3-Clause License
+*/
 
 use maps "std/maps"
 
+// The map of headers type used for requests.
 type HeaderMap = map[str]str
 
+// Slices a HeaderMap into a []str.
 fn Slice(headers: HeaderMap): []str {
 	let mut slice: []str = nil
 

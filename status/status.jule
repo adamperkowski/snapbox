@@ -1,23 +1,35 @@
-// snapbox
-// HTTP Client Library for Jule
-// https://github.com/adamperkowski/snapbox
-// Copyright (c) 2025, Adam Perkowski
-// BSD 3-Clause License
+/*
+snapbox
+HTTP Client Library for Jule
+https://github.com/adamperkowski/snapbox
+Copyright (c) 2025, Adam Perkowski
+BSD 3-Clause License
+*/
 
+// The status code type used for responses.
 type StatusCode: int
 
+// Checks if a status code is informational. (1xx)
 fn IsInformational(code: StatusCode): bool {
 	ret code >= 100 && code < 200
 }
+
+// Checks if a status code is a success. (2xx)
 fn IsSuccess(code: StatusCode): bool {
 	ret code >= 200 && code < 300
 }
+
+// Checks if a status code is a redirection. (3xx)
 fn IsRedirection(code: StatusCode): bool {
 	ret code >= 300 && code < 400
 }
+
+// Checks if a status code is a client error. (4xx)
 fn IsClientError(code: StatusCode): bool {
 	ret code >= 400 && code < 500
 }
+
+// Checks if a status code is a server error. (5xx)
 fn IsServerError(code: StatusCode): bool {
 	ret code >= 500 && code < 600
 }

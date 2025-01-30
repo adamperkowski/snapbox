@@ -39,17 +39,17 @@ struct curl_slist* sliceToSlist(const jule::Slice<jule::Str> headersSlice) {
     return headers;
 }
 
-struct response {
+struct Response {
     jule::Str body;
     jule::Int status;
 };
 
-response request(const char *url, const jule::Slice<jule::Str> headers, const jule::Int method) {
+Response request(const char *url, const jule::Slice<jule::Str> headers, const jule::Int method) {
     CURL* curl;
     CURLcode res;
     std::string readBuffer;
 
-    response response;
+    Response response;
     struct curl_slist* headersList = sliceToSlist(headers);
 
     curl = curl_easy_init();
@@ -79,12 +79,12 @@ response request(const char *url, const jule::Slice<jule::Str> headers, const ju
     return response;
 }
 
-response post(const char *url, const char *data, const jule::Slice<jule::Str> headers, const jule::Int method) {
+Response post(const char *url, const char *data, const jule::Slice<jule::Str> headers, const jule::Int method) {
     CURL* curl;
     CURLcode res;
     std::string readBuffer;
 
-    response response;
+    Response response;
     struct curl_slist* headersList = sliceToSlist(headers);
 
     curl = curl_easy_init();

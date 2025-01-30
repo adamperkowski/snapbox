@@ -1,11 +1,13 @@
-/*
-snapbox
-HTTP Client Library for Jule
-https://github.com/adamperkowski/snapbox
-Copyright (c) 2025, Adam Perkowski
-BSD 3-Clause License
-*/
+## Index
 
+[Variables](#variables)\
+[fn Slice\(headers: HeaderMap\): \[\]str](#slice)\
+[type HeaderMap](#headermap)
+
+
+## Variables
+
+```jule
 const ACCEPT = "Accept"
 const ACCEPT_CHARSET = "Accept-Charset"
 const ACCEPT_ENCODING = "Accept-Encoding"
@@ -86,3 +88,18 @@ const X_CONTENT_TYPE_OPTIONS = "X-Content-Type-Options"
 const X_DNS_PREFETCH_CONTROL = "X-Dns-Prefetch-Control"
 const X_FRAME_OPTIONS = "X-Frame-Options"
 const X_XSS_PROTECTION = "X-Xss-Protection"
+```
+
+
+## Slice
+```jule
+fn Slice(headers: HeaderMap): []str
+```
+Slices a HeaderMap into a \[\]str\.
+
+
+## HeaderMap
+```jule
+type HeaderMap = map[str]str
+```
+The map of headers type used for requests\.

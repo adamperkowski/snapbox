@@ -1,11 +1,16 @@
-/*
-snapbox
-HTTP Client Library for Jule
-https://github.com/adamperkowski/snapbox
-Copyright (c) 2025, Adam Perkowski
-BSD 3-Clause License
-*/
+## Index
 
+[Variables](#variables)\
+[fn IsInformational\(code: StatusCode\): bool](#isinformational)\
+[fn IsSuccess\(code: StatusCode\): bool](#issuccess)\
+[fn IsRedirection\(code: StatusCode\): bool](#isredirection)\
+[fn IsClientError\(code: StatusCode\): bool](#isclienterror)\
+[fn IsServerError\(code: StatusCode\): bool](#isservererror)\
+[type StatusCode](#statuscode)
+
+## Variables
+
+```jule
 const CONTINUE: StatusCode = 100
 const SWITCHING_PROTOCOLS: StatusCode = 101
 const PROCESSING: StatusCode = 102
@@ -66,3 +71,41 @@ const INSUFFICIENT_STORAGE: StatusCode = 507
 const LOOP_DETECTED: StatusCode = 508
 const NOT_EXTENDED: StatusCode = 510
 const NETWORK_AUTHENTICATION_REQUIRED: StatusCode = 511
+```
+
+
+## IsInformational
+```jule
+fn IsInformational(code: StatusCode): bool
+```
+Checks if a status code is informational\. \(1xx\)
+
+## IsSuccess
+```jule
+fn IsSuccess(code: StatusCode): bool
+```
+Checks if a status code is a success\. \(2xx\)
+
+## IsRedirection
+```jule
+fn IsRedirection(code: StatusCode): bool
+```
+Checks if a status code is a redirection\. \(3xx\)
+
+## IsClientError
+```jule
+fn IsClientError(code: StatusCode): bool
+```
+Checks if a status code is a client error\. \(4xx\)
+
+## IsServerError
+```jule
+fn IsServerError(code: StatusCode): bool
+```
+Checks if a status code is a server error\. \(5xx\)
+
+## StatusCode
+```jule
+type StatusCode: int
+```
+The status code type used for responses\.

@@ -22,6 +22,14 @@ examples:
 		cd ../..; \
 	done
 
+run-examples: examples
+	echo
+	@for example in $(EXAMPLES); do \
+		echo -e "Running $$example..."; \
+		./examples/bin/$$example $(TESTARGS); \
+		echo; \
+	done
+
 format:
 	$(JULEFMT) -w .
 	@for module in $(MODULES); do \
@@ -44,10 +52,11 @@ test:
 doc:
 	sed -i '/# API Reference/,$$d' book/src/SUMMARY.md;
 	echo '# API Reference' >> book/src/SUMMARY.md;
+	$(JULEDOC) . > book/src/api/$(NAME).md;
+	echo "- [$(NAME)](./api/$(NAME).md)" >> book/src/SUMMARY.md;
 	@for module in $(MODULES); do \
-		$(JULEDOC) $$module; \
-		mv output.md book/src/api/$$module.md; \
-		echo "- [$$module](./api/$$module.md)" >> book/src/SUMMARY.md; \
+		$(JULEDOC) $$module > book/src/api/$$module.md; \
+		echo "- [$(NAME)/$$module](./api/$$module.md)" >> book/src/SUMMARY.md; \
 	done
 package:
 	mkdir -p $(NAME)
