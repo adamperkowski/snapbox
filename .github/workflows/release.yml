@@ -28,9 +28,11 @@ jobs:
       - name:  Install JuleC
         uses: Panquesito7/setup-jule@v1.1.3
         with:
-          version: latest
+          version: dev
           directory: .julec
-          add-to-path: true
+
+      - name: Add JuleC to PATH
+        run: echo "$(pwd)/.julec/julec-dev/bin" >> $GITHUB_PATH
 
       - name: Install JuleDoc
         run: |
@@ -46,6 +48,7 @@ jobs:
 
       - name: Clean up
         run: |
+          make clean
           rm -rf .julec .juledoc **/.*out **/bin
 
       - name: Commit and tag
@@ -78,7 +81,7 @@ jobs:
           name: ${{ github.event.inputs.version }}
           body: |
             snapbox ${{ github.event.inputs.version }}
-            ## major changes
+            ## Major Changes
           append_body: true
           files: |
             snapbox-${{ github.event.inputs.version }}.tar.gz

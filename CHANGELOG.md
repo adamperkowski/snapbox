@@ -2,6 +2,21 @@
 
 All notable changes to snapbox will be documented in this file.
 
+## [0.0.3] - 2025-01-30
+
+### 🐛 Bug Fixes
+
+- *(compatibility)* cstrings and stuff... ([9df7330](https://github.com/adamperkowski/snapbox/commit/9df73309537bc4c91888a486feb6efd8e17a9219))
+
+### 🛠️ Refactoring
+
+- everything (lol) ([545ddb3](https://github.com/adamperkowski/snapbox/commit/545ddb329a28544d5a18cdccdb188879128296db))
+
+### 📚 Documentation
+
+- *(syntax)* fix the highlighting ([fe99203](https://github.com/adamperkowski/snapbox/commit/fe99203b4132ea3f55e0b017515d43bd1e75a76c))
+- prepare for juledoc ([fb178f7](https://github.com/adamperkowski/snapbox/commit/fb178f734835ebe90c816dc51ca83edd80c25308))
+
 ## [0.0.2] - 2025-01-15
 
 ### 🚀 Features
