@@ -243,85 +243,264 @@ fn main() {
 }
 </code></pre>
 <p>See the <a href="https://github.com/adamperkowski/snapbox/tree/main/examples">examples directory</a> for a full list of examples.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="api-reference"><a class="header" href="#api-reference">API Reference</a></h1>
-<p><strong>This document is written manually.<br>
-It might be unaccurate or outdated until <a href="https://github.com/julelang/jule/issues/126">JuleDoc</a> is released.</strong></p>
-<p>List of modules available in snapbox:</p>
-<ul>
-<li><a href="api.html#snapbox">snapbox</a></li>
-<li><a href="api.html#snapboxheader">snapbox/header</a></li>
-<li><a href="api.html#snapboxstatus">snapbox/status</a></li>
-</ul>
-<h2 id="snapbox"><a class="header" href="#snapbox">snapbox</a></h2>
-<p>The main module. It is a wrapper for the C++ <code>curl.h</code> functionality.</p>
-<div id="snapbox-fn-get">
-<code class="language-jule hljs"><span class="hljs-keyword">fn</span> <span class="hljs-function">GET</span>(url<span class="hljs-punctuation">:</span> <span class="hljs-operator">&amp;</span><span class="hljs-type">str</span>)<span class="hljs-punctuation">:</span> <a href="api.html#snapbox-struct-getrequest">getRequest</a>
-</code>
-</div>
-<div id="snapbox-fn-download">
-<code class="language-jule hljs"><span class="hljs-keyword">fn</span> <span class="hljs-function">Download</span>(url<span class="hljs-punctuation">:</span> <span class="hljs-type">str</span><span class="hljs-punctuation">,</span> path<span class="hljs-punctuation">:</span> <span class="hljs-type">str</span>)<span class="hljs-operator">!</span>
-</code>
-</div>
-<hr />
-<div id="snapbox-struct-getrequest">
-<code class="language-jule hljs"><span class="hljs-keyword">struct</span> getRequest {
-    url<span class="hljs-punctuation">:</span>         <span class="hljs-type">str</span>,
-    <span class="hljs-storage">mut</span> headers<span class="hljs-punctuation">:</span> <a href="api.html#snapboxheader">header</a><span class="hljs-punctuation">:</span><span class="hljs-punctuation">:</span><a href="api.html#snapboxheader-type-headermap">HeaderMap</a>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="index"><a class="header" href="#index">Index</a></h2>
+<p><a href="api/snapbox.html#get">fn GET(url: str): Request</a><br />
+<a href="api/snapbox.html#head">fn HEAD(url: str): Request</a><br />
+<a href="api/snapbox.html#post">fn POST(url: str): DataRequest</a><br />
+<a href="api/snapbox.html#put">fn PUT(url: str): DataRequest</a><br />
+<a href="api/snapbox.html#delete">fn DELETE(url: str): DataRequest</a><br />
+<a href="api/snapbox.html#download">fn Download(url: str, path: str)!</a><br />
+<a href="api/snapbox.html#request">struct Request</a><br />
+    <a href="api/snapbox.html#send">fn Send(self): cpp.Response</a><br />
+    <a href="api/snapbox.html#headers">fn Headers(self, headers: header::HeaderMap): Request</a><br />
+<a href="api/snapbox.html#datarequest">struct DataRequest</a><br />
+    <a href="api/snapbox.html#send-1">fn Send(self): cpp.Response</a><br />
+    <a href="api/snapbox.html#headers-1">fn Headers(self, headers: header::HeaderMap): DataRequest</a><br />
+    <a href="api/snapbox.html#data">fn Data(self, data: str): DataRequest</a></p>
+<h2 id="get"><a class="header" href="#get">GET</a></h2>
+<pre><code class="language-jule">fn GET(url: str): Request
+</code></pre>
+<p>Builds a GET request object.</p>
+<h2 id="head"><a class="header" href="#head">HEAD</a></h2>
+<pre><code class="language-jule">fn HEAD(url: str): Request
+</code></pre>
+<p>Builds a HEAD request object.</p>
+<h2 id="post"><a class="header" href="#post">POST</a></h2>
+<pre><code class="language-jule">fn POST(url: str): DataRequest
+</code></pre>
+<p>Builds a POST request object.</p>
+<h2 id="put"><a class="header" href="#put">PUT</a></h2>
+<pre><code class="language-jule">fn PUT(url: str): DataRequest
+</code></pre>
+<p>Builds a PUT request object.</p>
+<h2 id="delete"><a class="header" href="#delete">DELETE</a></h2>
+<pre><code class="language-jule">fn DELETE(url: str): DataRequest
+</code></pre>
+<p>Builds a DELETE request object.</p>
+<h2 id="download"><a class="header" href="#download">Download</a></h2>
+<pre><code class="language-jule">fn Download(url: str, path: str)!
+</code></pre>
+<p>Uses the internal C++ function to download a file from the given URL and save it to the given path.</p>
+<h2 id="request"><a class="header" href="#request">Request</a></h2>
+<pre><code class="language-jule">struct Request {
+	// NOTE: contains filtered hidden or unexported fields
 }
-</code>
-</div>
-<div id="snapbox-struct-getrequest-fn-send">
-<code class="language-jule hljs"><span class="hljs-keyword">fn</span> <span class="hljs-function">Send</span>(<span class="hljs-storage">self</span>)<span class="hljs-punctuation">:</span> <span class="hljs-keyword">cpp</span><span class="hljs-punctuation">.</span><a href="api.html#snapbox-cpp-struct-getresponse">getResponse</a>
-</code>
-</div>
-<div id="snapbox-struct-getrequest-fn-headers">
-<code class="language-jule hljs"><span class="hljs-keyword">fn</span> <span class="hljs-function">Headers</span>(<span class="hljs-storage">self</span><span class="hljs-punctuation">,</span> headers<span class="hljs-punctuation">:</span> <a href="api.html#snapboxheader">header</a><span class="hljs-punctuation">:</span><span class="hljs-punctuation">:</span><a href="api.html#snapboxheader-type-headermap">HeaderMap</a>)<span class="hljs-punctuation">:</span> <a href="api.html#snapbox-struct-getrequest">getRequest</a>
-</code>
-</div>
-<hr />
-<div id="snapbox-cpp-struct-getresponse">
-<code class="language-jule hljs"><span class="hljs-keyword">cpp</span> <span class="hljs-keyword">struct</span> getResponse {
-    url<span class="hljs-punctuation">:</span>    <span class="hljs-type">str</span>,
-    status<span class="hljs-punctuation">:</span> <a href="api.html#snapboxstatus">status</a><span class="hljs-punctuation">:</span><span class="hljs-punctuation">:</span><a href="api.html#snapboxstatus-type-statuscode">StatusCode</a>
+</code></pre>
+<p>Request structure for non-data requests.</p>
+<h3 id="send"><a class="header" href="#send">Send</a></h3>
+<pre><code class="language-jule">fn Send(self): cpp.Response
+</code></pre>
+<p>Executes the request and returns the response.</p>
+<h3 id="headers"><a class="header" href="#headers">Headers</a></h3>
+<pre><code class="language-jule">fn Headers(self, headers: header::HeaderMap): Request
+</code></pre>
+<p>Sets headers for the request.</p>
+<h2 id="datarequest"><a class="header" href="#datarequest">DataRequest</a></h2>
+<pre><code class="language-jule">struct DataRequest {
+	// NOTE: contains filtered hidden or unexported fields
 }
-</code>
-</div>
-<h2 id="snapboxheader"><a class="header" href="#snapboxheader">snapbox/header</a></h2>
-<p>This module includes a collection of <a href="https://github.com/adamperkowski/snapbox/blob/main/snapbox/header/names.jule">HTTP headers constants</a> and types.</p>
-<div id="snapboxheader-type-headermap">
-<code class="language-jule hljs"><span class="hljs-keyword">type</span> HeaderMap<span class="hljs-punctuation">:</span> <span class="hljs-keyword">map</span>[<span class="hljs-type">str</span>]<span class="hljs-type">str</span>
-</code>
-</div>
-<div id="snapboxheader-fn-slice">
-<code class="language-jule hljs"><span class="hljs-keyword">fn</span> <span class="hljs-function">Slice</span>(headers<span class="hljs-punctuation">:</span> <a href="api.html#snapboxheader-type-headermap">HeaderMap</a>)<span class="hljs-punctuation">:</span> []<span class="hljs-type">str</span>
-</code>
-</div>
-<h2 id="snapboxstatus"><a class="header" href="#snapboxstatus">snapbox/status</a></h2>
-<p>This module includes a collection of <a href="https://github.com/adamperkowski/snapbox/blob/main/snapbox/status/codes.jule">HTTP status code constants</a>, types and classifying functions.</p>
-<div id="snapboxstatus-type-statuscode">
-<code class="language-jule hljs"><span class="hljs-keyword">type</span> StatusCode<span class="hljs-punctuation">:</span> <span class="hljs-type">int</span>
-</code>
-</div>
-<div id="snapboxstatus-fn-isinformational">
-<code class="language-jule hljs"><span class="hljs-keyword">fn</span> <span class="hljs-function">IsInformational</span>(code<span class="hljs-punctuation">:</span> <a href="api.html#snapboxstatus-type-statuscode">StatusCode</a>)<span class="hljs-punctuation">:</span> <span class="hljs-type">bool</span>
-</code>
-</div>
-<div id="snapboxstatus-fn-issuccess">
-<code class="language-jule hljs"><span class="hljs-keyword">fn</span> <span class="hljs-function">IsSuccess</span>(code<span class="hljs-punctuation">:</span> <a href="api.html#snapboxstatus-type-statuscode">StatusCode</a>)<span class="hljs-punctuation">:</span> <span class="hljs-type">bool</span>
-</code>
-</div>
-<div id="snapboxstatus-fn-isredirection">
-<code class="language-jule hljs"><span class="hljs-keyword">fn</span> <span class="hljs-function">IsRedirection</span>(code<span class="hljs-punctuation">:</span> <a href="api.html#snapboxstatus-type-statuscode">StatusCode</a>)<span class="hljs-punctuation">:</span> <span class="hljs-type">bool</span>
-</code>
-</div>
-<div id="snapboxstatus-fn-isclienterror">
-<code class="language-jule hljs"><span class="hljs-keyword">fn</span> <span class="hljs-function">IsClientError</span>(code<span class="hljs-punctuation">:</span> <a href="api.html#snapboxstatus-type-statuscode">StatusCode</a>)<span class="hljs-punctuation">:</span> <span class="hljs-type">bool</span>
-</code>
-</div>
-<div id="snapboxstatus-fn-isservererror">
-<code class="language-jule hljs"><span class="hljs-keyword">fn</span> <span class="hljs-function">IsServerError</span>(code<span class="hljs-punctuation">:</span> <a href="api.html#snapboxstatus-type-statuscode">StatusCode</a>)<span class="hljs-punctuation">:</span> <span class="hljs-type">bool</span>
-</code>
-</div>
+</code></pre>
+<p>Request structure for data requests.</p>
+<h3 id="send-1"><a class="header" href="#send-1">Send</a></h3>
+<pre><code class="language-jule">fn Send(self): cpp.Response
+</code></pre>
+<p>Executes the request and returns the response.</p>
+<h3 id="headers-1"><a class="header" href="#headers-1">Headers</a></h3>
+<pre><code class="language-jule">fn Headers(self, headers: header::HeaderMap): DataRequest
+</code></pre>
+<p>Sets headers for the request.</p>
+<h3 id="data"><a class="header" href="#data">Data</a></h3>
+<pre><code class="language-jule">fn Data(self, data: str): DataRequest
+</code></pre>
+<p>Sets data for the request.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="index-1"><a class="header" href="#index-1">Index</a></h2>
+<p><a href="api/status.html#variables">Variables</a><br />
+<a href="api/status.html#isinformational">fn IsInformational(code: StatusCode): bool</a><br />
+<a href="api/status.html#issuccess">fn IsSuccess(code: StatusCode): bool</a><br />
+<a href="api/status.html#isredirection">fn IsRedirection(code: StatusCode): bool</a><br />
+<a href="api/status.html#isclienterror">fn IsClientError(code: StatusCode): bool</a><br />
+<a href="api/status.html#isservererror">fn IsServerError(code: StatusCode): bool</a><br />
+<a href="api/status.html#statuscode">type StatusCode</a></p>
+<h2 id="variables"><a class="header" href="#variables">Variables</a></h2>
+<pre><code class="language-jule">const CONTINUE: StatusCode = 100
+const SWITCHING_PROTOCOLS: StatusCode = 101
+const PROCESSING: StatusCode = 102
+const OK: StatusCode = 200
+const CREATED: StatusCode = 201
+const ACCEPTED: StatusCode = 202
+const NON_AUTHORITATIVE_INFORMATION: StatusCode = 203
+const NO_CONTENT: StatusCode = 204
+const RESET_CONTENT: StatusCode = 205
+const PARTIAL_CONTENT: StatusCode = 206
+const MULTI_STATUS: StatusCode = 207
+const ALREADY_REPORTED: StatusCode = 208
+const IM_USED: StatusCode = 226
+const MULTIPLE_CHOICES: StatusCode = 300
+const MOVED_PERMANENTLY: StatusCode = 301
+const FOUND: StatusCode = 302
+const SEE_OTHER: StatusCode = 303
+const NOT_MODIFIED: StatusCode = 304
+const USE_PROXY: StatusCode = 305
+const TEMPORARY_REDIRECT: StatusCode = 307
+const PERMANENT_REDIRECT: StatusCode = 308
+const BAD_REQUEST: StatusCode = 400
+const UNAUTHORIZED: StatusCode = 401
+const PAYMENT_REQUIRED: StatusCode = 402
+const FORBIDDEN: StatusCode = 403
+const NOT_FOUND: StatusCode = 404
+const METHOD_NOT_ALLOWED: StatusCode = 405
+const NOT_ACCEPTABLE: StatusCode = 406
+const PROXY_AUTHENTICATION_REQUIRED: StatusCode = 407
+const REQUEST_TIMEOUT: StatusCode = 408
+const CONFLICT: StatusCode = 409
+const GONE: StatusCode = 410
+const LENGTH_REQUIRED: StatusCode = 411
+const PRECONDITION_FAILED: StatusCode = 412
+const PAYLOAD_TOO_LARGE: StatusCode = 413
+const URI_TOO_LONG: StatusCode = 414
+const UNSUPPORTED_MEDIA_TYPE: StatusCode = 415
+const RANGE_NOT_SATISFIABLE: StatusCode = 416
+const EXPECTATION_FAILED: StatusCode = 417
+const IM_A_TEAPOT: StatusCode = 418
+const MISDIRECTED_REQUEST: StatusCode = 421
+const UNPROCESSABLE_ENTITY: StatusCode = 422
+const LOCKED: StatusCode = 423
+const FAILED_DEPENDENCY: StatusCode = 424
+const UPGRADE_REQUIRED: StatusCode = 426
+const PRECONDITION_REQUIRED: StatusCode = 428
+const TOO_MANY_REQUESTS: StatusCode = 429
+const REQUEST_HEADER_FIELDS_TOO_LARGE: StatusCode = 431
+const UNAVAILABLE_FOR_LEGAL_REASONS: StatusCode = 451
+const INTERNAL_SERVER_ERROR: StatusCode = 500
+const NOT_IMPLEMENTED: StatusCode = 501
+const BAD_GATEWAY: StatusCode = 502
+const SERVICE_UNAVAILABLE: StatusCode = 503
+const GATEWAY_TIMEOUT: StatusCode = 504
+const HTTP_VERSION_NOT_SUPPORTED: StatusCode = 505
+const VARIANT_ALSO_NEGOTIATES: StatusCode = 506
+const INSUFFICIENT_STORAGE: StatusCode = 507
+const LOOP_DETECTED: StatusCode = 508
+const NOT_EXTENDED: StatusCode = 510
+const NETWORK_AUTHENTICATION_REQUIRED: StatusCode = 511
+</code></pre>
+<h2 id="isinformational"><a class="header" href="#isinformational">IsInformational</a></h2>
+<pre><code class="language-jule">fn IsInformational(code: StatusCode): bool
+</code></pre>
+<p>Checks if a status code is informational. (1xx)</p>
+<h2 id="issuccess"><a class="header" href="#issuccess">IsSuccess</a></h2>
+<pre><code class="language-jule">fn IsSuccess(code: StatusCode): bool
+</code></pre>
+<p>Checks if a status code is a success. (2xx)</p>
+<h2 id="isredirection"><a class="header" href="#isredirection">IsRedirection</a></h2>
+<pre><code class="language-jule">fn IsRedirection(code: StatusCode): bool
+</code></pre>
+<p>Checks if a status code is a redirection. (3xx)</p>
+<h2 id="isclienterror"><a class="header" href="#isclienterror">IsClientError</a></h2>
+<pre><code class="language-jule">fn IsClientError(code: StatusCode): bool
+</code></pre>
+<p>Checks if a status code is a client error. (4xx)</p>
+<h2 id="isservererror"><a class="header" href="#isservererror">IsServerError</a></h2>
+<pre><code class="language-jule">fn IsServerError(code: StatusCode): bool
+</code></pre>
+<p>Checks if a status code is a server error. (5xx)</p>
+<h2 id="statuscode"><a class="header" href="#statuscode">StatusCode</a></h2>
+<pre><code class="language-jule">type StatusCode: int
+</code></pre>
+<p>The status code type used for responses.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="index-2"><a class="header" href="#index-2">Index</a></h2>
+<p><a href="api/header.html#variables">Variables</a><br />
+<a href="api/header.html#slice">fn Slice(headers: HeaderMap): []str</a><br />
+<a href="api/header.html#headermap">type HeaderMap</a></p>
+<h2 id="variables-1"><a class="header" href="#variables-1">Variables</a></h2>
+<pre><code class="language-jule">const ACCEPT = "Accept"
+const ACCEPT_CHARSET = "Accept-Charset"
+const ACCEPT_ENCODING = "Accept-Encoding"
+const ACCEPT_LANGUAGE = "Accept-Language"
+const ACCEPT_RANGES = "Accept-Ranges"
+const ACCESS_CONTROL_ALLOW_CREDENTIALS = "Access-Control-Allow-Credentials"
+const ACCESS_CONTROL_ALLOW_HEADERS = "Access-Control-Allow-Headers"
+const ACCESS_CONTROL_ALLOW_METHODS = "Access-Control-Allow-Methods"
+const ACCESS_CONTROL_ALLOW_ORIGIN = "Access-Control-Allow-Origin"
+const ACCESS_CONTROL_EXPOSE_HEADERS = "Access-Control-Expose-Headers"
+const ACCESS_CONTROL_MAX_AGE = "Access-Control-Max-Age"
+const ACCESS_CONTROL_REQUEST_HEADERS = "Access-Control-Request-Headers"
+const ACCESS_CONTROL_REQUEST_METHOD = "Access-Control-Request-Method"
+const AGE = "Age"
+const ALLOW = "Allow"
+const ALT_SVC = "Alt-Svc"
+const AUTHORIZATION = "Authorization"
+const CACHE_CONTROL = "Cache-Control"
+const CACHE_STATUS = "Cache-Status"
+const CDN_CACHE_CONTROL = "CDN-Cache-Control"
+const CONNECTION = "Connection"
+const CONTENT_DISPOSITION = "Content-Disposition"
+const CONTENT_ENCODING = "Content-Encoding"
+const CONTENT_LANGUAGE = "Content-Language"
+const CONTENT_LENGTH = "Content-Length"
+const CONTENT_LOCATION = "Content-Location"
+const CONTENT_RANGE = "Content-Range"
+const CONTENT_SECURITY_POLICY = "Content-Security-Policy"
+const CONTENT_SECURITY_POLICY_REPORT_ONLY = "Content-Security-Policy-Report-Only"
+const CONTENT_TYPE = "Content-Type"
+const COOKIE = "Cookie"
+const DATE = "Date"
+const DNT = "Dnt"
+const ETAG = "Etag"
+const EXPECT = "Expect"
+const EXPIRES = "Expires"
+const FORWARDED = "Forwarded"
+const FROM = "From"
+const HOST = "Host"
+const IF_MATCH = "If-Match"
+const IF_MODIFIED_SINCE = "If-Modified-Since"
+const IF_NONE_MATCH = "If-None-Match"
+const IF_RANGE = "If-Range"
+const IF_UNMODIFIED_SINCE = "If-Unmodified-Since"
+const LAST_MODIFIED = "Last-Modified"
+const LINK = "Link"
+const LOCATION = "Location"
+const MAX_FORWARDS = "Max-Forwards"
+const ORIGIN = "Origin"
+const PRAGMA = "Pragma"
+const PROXY_AUTHENTICATE = "Proxy-Authenticate"
+const PROXY_AUTHORIZATION = "Proxy-Authorization"
+const PUBLIC_KEY_PINS = "Public-Key-Pins"
+const PUBLIC_KEY_PINS_REPORT_ONLY = "Public-Key-Pins-Report-Only"
+const RANGE = "Range"
+const REFERER = "Referer"
+const REFERRER_POLICY = "Referrer-Policy"
+const RETRY_AFTER = "Retry-After"
+const SEC_WEBSOCKET_ACCEPT = "Sec-Websocket-Accept"
+const SEC_WEBSOCKET_EXTENSIONS = "Sec-Websocket-Extensions"
+const SEC_WEBSOCKET_KEY = "Sec-Websocket-Key"
+const SEC_WEBSOCKET_PROTOCOL = "Sec-Websocket-Protocol"
+const SEC_WEBSOCKET_VERSION = "Sec-Websocket-Version"
+const SERVER = "Server"
+const SET_COOKIE = "Set-Cookie"
+const STRICT_TRANSPORT_SECURITY = "Strict-Transport-Security"
+const TE = "Te"
+const TRAILER = "Trailer"
+const TRANSFER_ENCODING = "Transfer-Encoding"
+const UPGRADE = "Upgrade"
+const UPGRADE_INSECURE_REQUESTS = "Upgrade-Insecure-Requests"
+const USER_AGENT = "User-Agent"
+const VARY = "Vary"
+const VIA = "Via"
+const WARNING = "Warning"
+const WWW_AUTHENTICATE = "Www-Authenticate"
+const X_CONTENT_TYPE_OPTIONS = "X-Content-Type-Options"
+const X_DNS_PREFETCH_CONTROL = "X-Dns-Prefetch-Control"
+const X_FRAME_OPTIONS = "X-Frame-Options"
+const X_XSS_PROTECTION = "X-Xss-Protection"
+</code></pre>
+<h2 id="slice"><a class="header" href="#slice">Slice</a></h2>
+<pre><code class="language-jule">fn Slice(headers: HeaderMap): []str
+</code></pre>
+<p>Slices a HeaderMap into a []str.</p>
+<h2 id="headermap"><a class="header" href="#headermap">HeaderMap</a></h2>
+<pre><code class="language-jule">type HeaderMap = map[str]str
+</code></pre>
+<p>The map of headers type used for requests.</p>
 
                     </main>
 
