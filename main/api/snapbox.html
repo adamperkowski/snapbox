@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Usage Examples - snapbox</title>
+        <title>snapbox - snapbox</title>
 
 
         <!-- Custom HTML head -->
@@ -12,32 +12,32 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon.svg">
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="fonts/fonts.css">
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
 
         <!-- Provide site root to javascript -->
         <script>
-            var path_to_root = "";
+            var path_to_root = "../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "coal" : "light";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc.js"></script>
+        <script src="../toc.js"></script>
     </head>
     <body>
     <div id="body-container">
@@ -89,7 +89,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
             </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -123,13 +123,13 @@
                     <h1 class="menu-title">snapbox</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
                         <a href="https://github.com/adamperkowski/snapbox" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        <a href="https://github.com/adamperkowski/snapbox/edit/main/book/src/usage-examples.md" title="Suggest an edit" aria-label="Suggest an edit">
+                        <a href="https://github.com/adamperkowski/snapbox/edit/main/book/src/api/snapbox.md" title="Suggest an edit" aria-label="Suggest an edit">
                             <i id="git-edit-button" class="fa fa-edit"></i>
                         </a>
 
@@ -158,75 +158,86 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="usage-examples"><a class="header" href="#usage-examples">Usage Examples</a></h1>
-<p>Below are some simple examples of how to use snapbox.</p>
-<h2 id="basic-requests"><a class="header" href="#basic-requests">Basic Requests</a></h2>
-<pre><code class="language-jule">// get.jule
-use "snapbox"
-use "snapbox/header"
-use "snapbox/status"
-
-fn main() {
-        let headerMap: header::HeaderMap = {
-                header::ACCEPT: "application/json",
-        }
-
-        request := snapbox::GET("https://httpbin.org/get").Headers(headerMap)
-        response := request.Send()
-
-        if !status::IsSuccess(response.status) {
-                println("Error: ")
-                println(response.status)
-        }
-
-        print(response.body)
-}
-
-// post.jule
-use "snapbox"
-use "snapbox/header"
-use "snapbox/status"
-
-const DATA = "Hello, World!"
-
-fn main() {
-        let headerMap: header::HeaderMap = {
-                header::ACCEPT: "application/json",
-                header::CONTENT_TYPE: "text/plain",
-        }
-
-        request := snapbox::POST("https://httpbin.org/post").Data(DATA).Headers(headerMap)
-        response := request.Send()
-
-        if !status::IsSuccess(response.status) {
-                println("Error: ")
-                println(response.status)
-        }
-
-        print(response.body)
+                        <h2 id="index"><a class="header" href="#index">Index</a></h2>
+<p><a href="#get">fn GET(url: str): Request</a><br />
+<a href="#head">fn HEAD(url: str): Request</a><br />
+<a href="#post">fn POST(url: str): DataRequest</a><br />
+<a href="#put">fn PUT(url: str): DataRequest</a><br />
+<a href="#delete">fn DELETE(url: str): DataRequest</a><br />
+<a href="#download">fn Download(url: str, path: str)!</a><br />
+<a href="#request">struct Request</a><br />
+    <a href="#send">fn Send(self): cpp.Response</a><br />
+    <a href="#headers">fn Headers(self, headers: header::HeaderMap): Request</a><br />
+<a href="#datarequest">struct DataRequest</a><br />
+    <a href="#send-1">fn Send(self): cpp.Response</a><br />
+    <a href="#headers-1">fn Headers(self, headers: header::HeaderMap): DataRequest</a><br />
+    <a href="#data">fn Data(self, data: str): DataRequest</a></p>
+<h2 id="get"><a class="header" href="#get">GET</a></h2>
+<pre><code class="language-jule">fn GET(url: str): Request
+</code></pre>
+<p>Builds a GET request object.</p>
+<h2 id="head"><a class="header" href="#head">HEAD</a></h2>
+<pre><code class="language-jule">fn HEAD(url: str): Request
+</code></pre>
+<p>Builds a HEAD request object.</p>
+<h2 id="post"><a class="header" href="#post">POST</a></h2>
+<pre><code class="language-jule">fn POST(url: str): DataRequest
+</code></pre>
+<p>Builds a POST request object.</p>
+<h2 id="put"><a class="header" href="#put">PUT</a></h2>
+<pre><code class="language-jule">fn PUT(url: str): DataRequest
+</code></pre>
+<p>Builds a PUT request object.</p>
+<h2 id="delete"><a class="header" href="#delete">DELETE</a></h2>
+<pre><code class="language-jule">fn DELETE(url: str): DataRequest
+</code></pre>
+<p>Builds a DELETE request object.</p>
+<h2 id="download"><a class="header" href="#download">Download</a></h2>
+<pre><code class="language-jule">fn Download(url: str, path: str)!
+</code></pre>
+<p>Uses the internal C++ function to download a file from the given URL and save it to the given path.</p>
+<h2 id="request"><a class="header" href="#request">Request</a></h2>
+<pre><code class="language-jule">struct Request {
+	// NOTE: contains filtered hidden or unexported fields
 }
 </code></pre>
-<h2 id="file-downloading"><a class="header" href="#file-downloading">File Downloading</a></h2>
-<pre><code class="language-jule">// download.jule
-use "snapbox"
-
-fn main() {
-        snapbox::Download("https://httpbin.org/get", "output.txt") else {
-                println(error)
-        }
+<p>Request structure for non-data requests.</p>
+<h3 id="send"><a class="header" href="#send">Send</a></h3>
+<pre><code class="language-jule">fn Send(self): cpp.Response
+</code></pre>
+<p>Executes the request and returns the response.</p>
+<h3 id="headers"><a class="header" href="#headers">Headers</a></h3>
+<pre><code class="language-jule">fn Headers(self, headers: header::HeaderMap): Request
+</code></pre>
+<p>Sets headers for the request.</p>
+<h2 id="datarequest"><a class="header" href="#datarequest">DataRequest</a></h2>
+<pre><code class="language-jule">struct DataRequest {
+	// NOTE: contains filtered hidden or unexported fields
 }
 </code></pre>
-<p>See the <a href="https://github.com/adamperkowski/snapbox/tree/main/examples">examples directory</a> for a full list of examples.</p>
+<p>Request structure for data requests.</p>
+<h3 id="send-1"><a class="header" href="#send-1">Send</a></h3>
+<pre><code class="language-jule">fn Send(self): cpp.Response
+</code></pre>
+<p>Executes the request and returns the response.</p>
+<h3 id="headers-1"><a class="header" href="#headers-1">Headers</a></h3>
+<pre><code class="language-jule">fn Headers(self, headers: header::HeaderMap): DataRequest
+</code></pre>
+<p>Sets headers for the request.</p>
+<h3 id="data"><a class="header" href="#data">Data</a></h3>
+<pre><code class="language-jule">fn Data(self, data: str): DataRequest
+</code></pre>
+<p>Sets data for the request.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="getting-started.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../usage-examples.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="api/snapbox.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../api/status.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -236,11 +247,11 @@ fn main() {
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="getting-started.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../usage-examples.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="api/snapbox.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../api/status.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -255,16 +266,16 @@ fn main() {
         </script>
 
 
-        <script src="elasticlunr.min.js"></script>
-        <script src="mark.min.js"></script>
-        <script src="searcher.js"></script>
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
 
-        <script src="clipboard.min.js"></script>
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="theme/jule-highlight.js"></script>
+        <script src="../theme/jule-highlight.js"></script>
 
 
     </div>
