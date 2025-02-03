@@ -1,12 +1,12 @@
 ## Index
 
 [Variables](#variables)\
+[type StatusCode](#statuscode)\
 [fn IsInformational\(code: StatusCode\): bool](#isinformational)\
 [fn IsSuccess\(code: StatusCode\): bool](#issuccess)\
 [fn IsRedirection\(code: StatusCode\): bool](#isredirection)\
 [fn IsClientError\(code: StatusCode\): bool](#isclienterror)\
-[fn IsServerError\(code: StatusCode\): bool](#isservererror)\
-[type StatusCode](#statuscode)
+[fn IsServerError\(code: StatusCode\): bool](#isservererror)
 
 ## Variables
 
@@ -74,6 +74,12 @@ const NETWORK_AUTHENTICATION_REQUIRED: StatusCode = 511
 ```
 
 
+## StatusCode
+```jule
+type StatusCode = int
+```
+The status code type used for responses\.
+
 ## IsInformational
 ```jule
 fn IsInformational(code: StatusCode): bool
@@ -103,9 +109,3 @@ Checks if a status code is a client error\. \(4xx\)
 fn IsServerError(code: StatusCode): bool
 ```
 Checks if a status code is a server error\. \(5xx\)
-
-## StatusCode
-```jule
-type StatusCode: int
-```
-The status code type used for responses\.

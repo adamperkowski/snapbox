@@ -1,9 +1,8 @@
 ## Index
 
 [Variables](#variables)\
-[fn Slice\(headers: HeaderMap\): \[\]str](#slice)\
-[type HeaderMap](#headermap)
-
+[type HeaderMap](#headermap)\
+[fn Slice\(headers: HeaderMap\): \[\]str](#slice)
 
 ## Variables
 
@@ -91,15 +90,14 @@ const X_XSS_PROTECTION = "X-Xss-Protection"
 ```
 
 
-## Slice
-```jule
-fn Slice(headers: HeaderMap): []str
-```
-Slices a HeaderMap into a \[\]str\.
-
-
 ## HeaderMap
 ```jule
 type HeaderMap = map[str]str
 ```
 The map of headers type used for requests\.
+
+## Slice
+```jule
+fn Slice(headers: HeaderMap): []str
+```
+Slices a HeaderMap into a \[\]str\.

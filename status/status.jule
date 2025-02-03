@@ -7,7 +7,7 @@ BSD 3-Clause License
 */
 
 // The status code type used for responses.
-type StatusCode: int
+type StatusCode = int
 
 // Checks if a status code is informational. (1xx)
 fn IsInformational(code: StatusCode): bool {
