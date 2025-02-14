@@ -4,6 +4,8 @@
 // Copyright (c) 2025, Adam Perkowski
 // BSD 3-Clause License
 
+#include <jule.hpp>
+
 #ifndef CURLWRAPPER_HPP
 #define CURLWRAPPER_HPP
 

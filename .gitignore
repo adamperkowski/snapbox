@@ -6,3 +6,4 @@ output.*
 **/*.out
 **/dist
 **/bin
+**/*.pch
