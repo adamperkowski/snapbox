@@ -4,7 +4,9 @@
 // Copyright (c) 2025, Adam Perkowski
 // BSD 3-Clause License
 
+#ifdef DEBUG
 #include <jule.hpp>
+#endif
 
 #ifndef CURLWRAPPER_HPP
 #define CURLWRAPPER_HPP
@@ -12,16 +14,16 @@
 #include <string>
 #include <curl/curl.h>
 
-size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::string* userp) {
+static size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::string* userp) {
     userp->append((char*)contents, size * nmemb);
     return size * nmemb;
 }
 
-size_t WriteFileCallback(void* ptr, size_t size, size_t nmemb, FILE* stream) {
+static size_t WriteFileCallback(void* ptr, size_t size, size_t nmemb, FILE* stream) {
     return fwrite(ptr, size, nmemb, stream);
 }
 
-std::string strToString(jule::Str str) {
+static std::string strToString(jule::Str str) {
     std::string result = "";
     for (jule::U8& c : str) {
         result += c;
@@ -29,7 +31,7 @@ std::string strToString(jule::Str str) {
     return result;
 }
 
-struct curl_slist* sliceToSlist(const jule::Slice<jule::Str> headersSlice) {
+static struct curl_slist* sliceToSlist(const jule::Slice<jule::Str> headersSlice) {
     struct curl_slist* headers = NULL;
     const int headersLen = headersSlice.len();
     for (size_t i = 0; i < headersLen; i += 2) {
@@ -46,7 +48,7 @@ struct Response {
     jule::Int status;
 };
 
-Response request(const char *url, const jule::Slice<jule::Str> headers, const jule::Int method) {
+static Response request(const char *url, const jule::Slice<jule::Str> headers, const jule::Int method) {
     CURL* curl;
     CURLcode res;
     std::string readBuffer;
@@ -81,7 +83,7 @@ Response request(const char *url, const jule::Slice<jule::Str> headers, const ju
     return response;
 }
 
-Response post(const char *url, const char *data, const jule::Slice<jule::Str> headers, const jule::Int method) {
+static Response post(const char *url, const char *data, const jule::Slice<jule::Str> headers, const jule::Int method) {
     CURL* curl;
     CURLcode res;
     std::string readBuffer;
@@ -121,7 +123,7 @@ Response post(const char *url, const char *data, const jule::Slice<jule::Str> he
     return response;
 }
 
-bool download(jule::Str url, jule::Str filename) {
+static bool download(jule::Str url, jule::Str filename) {
     CURL* curl = curl_easy_init();
     if (!curl) {
         return false;
@@ -147,3 +149,4 @@ bool download(jule::Str url, jule::Str filename) {
 }
 
 #endif // CURLWRAPPER_HPP
+

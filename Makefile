@@ -18,7 +18,9 @@ examples:
 	@for example in $(EXAMPLES); do \
 		cd examples/$$example; \
 		echo "Building $$example..."; \
-		$(JULEC) . -o ../bin/$$example; \
+		if ! $(JULEC) . -o ../bin/$$example; then \
+			exit 1; \
+		fi; \
 		cd ../..; \
 	done
 
@@ -45,7 +47,9 @@ test:
 	./bin/$(NAME)
 	@for module in $(MODULES); do \
 		echo "Testing $(NAME)/$$module..."; \
-		$(JULEC) test $$module -o bin/$$module; \
+		if ! $(JULEC) test $$module -o bin/$$module; then \
+			exit 1; \
+		fi; \
 		./bin/$$module; \
 	done
 
