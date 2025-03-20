@@ -12,7 +12,8 @@ HTTP Client Library for Jule
 Supported Jule Versions:
 - `jule0.1.2`
 - `jule0.1.3`
-- `jule0.1.4@master`
+- `jule0.1.4`
+- `jule0.1.5@master`
 
 ## Features
 Currently fully supported request methods:

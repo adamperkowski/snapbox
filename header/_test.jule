@@ -23,6 +23,6 @@ fn slicing(t: &testing::T) {
 	sliced := Slice(headerMap)
 
 	for _, k in keys {
-		t.Assert(sliced[s::Find(sliced, k)+1] == headerMap[k], "sliced HeaderMap does not match expected")
+		t.Assert(sliced[s::Index(sliced, k)+1] == headerMap[k], "sliced HeaderMap does not match expected")
 	}
 }
