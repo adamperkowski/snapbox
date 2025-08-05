@@ -7,12 +7,12 @@
 [fn DELETE\(url: str\): DataRequest](#delete)\
 [fn Download\(url: str, path: str\)\!](#download)\
 [struct Request](#request)\
-&nbsp;&nbsp;&nbsp;&nbsp;[fn Send\(self\): cpp\.Response](#send)\
-&nbsp;&nbsp;&nbsp;&nbsp;[fn Headers\(self, headers: header::HeaderMap\): Request](#headers)\
+&nbsp;&nbsp;&nbsp;&nbsp;[fn Send\(\*self\): cpp\.Response](#send)\
+&nbsp;&nbsp;&nbsp;&nbsp;[fn Headers\(\*self, headers: header::HeaderMap\): Request](#headers)\
 [struct DataRequest](#datarequest)\
-&nbsp;&nbsp;&nbsp;&nbsp;[fn Send\(self\): cpp\.Response](#send-1)\
-&nbsp;&nbsp;&nbsp;&nbsp;[fn Headers\(self, headers: header::HeaderMap\): DataRequest](#headers-1)\
-&nbsp;&nbsp;&nbsp;&nbsp;[fn Data\(self, data: str\): DataRequest](#data)
+&nbsp;&nbsp;&nbsp;&nbsp;[fn Send\(\*self\): cpp\.Response](#send-1)\
+&nbsp;&nbsp;&nbsp;&nbsp;[fn Headers\(\*self, headers: header::HeaderMap\): DataRequest](#headers-1)\
+&nbsp;&nbsp;&nbsp;&nbsp;[fn Data\(\*self, data: str\): DataRequest](#data)
 
 
 
@@ -62,13 +62,13 @@ Request structure for non\-data requests\.
 
 ### Send
 ```jule
-fn Send(self): cpp.Response
+fn Send(*self): cpp.Response
 ```
 Executes the request and returns the response\.
 
 ### Headers
 ```jule
-fn Headers(self, headers: header::HeaderMap): Request
+fn Headers(*self, headers: header::HeaderMap): Request
 ```
 Sets headers for the request\.
 
@@ -82,18 +82,18 @@ Request structure for data requests\.
 
 ### Send
 ```jule
-fn Send(self): cpp.Response
+fn Send(*self): cpp.Response
 ```
 Executes the request and returns the response\.
 
 ### Headers
 ```jule
-fn Headers(self, headers: header::HeaderMap): DataRequest
+fn Headers(*self, headers: header::HeaderMap): DataRequest
 ```
 Sets headers for the request\.
 
 ### Data
 ```jule
-fn Data(self, data: str): DataRequest
+fn Data(*self, data: str): DataRequest
 ```
 Sets data for the request\.

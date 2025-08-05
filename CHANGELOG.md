@@ -2,6 +2,23 @@
 
 All notable changes to snapbox will be documented in this file.
 
+## [0.0.4] - 2025-08-05
+
+### 🐛 Bug Fixes
+
+- *(status)* make StatusCode a soft type alias ([a7ae0cb](https://github.com/adamperkowski/snapbox/commit/a7ae0cb7c3c681a40c5134fc165e831f2e027ca4))
+
+### 🛠️ Refactoring
+
+- port to Jule v0.1.4 ([ec27e1f](https://github.com/adamperkowski/snapbox/commit/ec27e1f34cab0d630bb1bd49165f24ccc3d41d56))
+- port to Jule v0.1.6 ([718bae1](https://github.com/adamperkowski/snapbox/commit/718bae1c6cf04c162da9089e1feefaead5ff7130))
+
+### ⚙️ Miscellaneous Tasks
+
+- update supported jule versions ([8ca4757](https://github.com/adamperkowski/snapbox/commit/8ca47577c74c129865ba852b2a0d53ca3e9eba0e))
+- set up clangd ([35b2813](https://github.com/adamperkowski/snapbox/commit/35b2813456cf370d1ae6b672eb71dee5b8b267d0))
+- improve C++ code structure ([d1c11a1](https://github.com/adamperkowski/snapbox/commit/d1c11a108c1e12d788f3c27f0f8c8526a491837a))
+
 ## [0.0.3] - 2025-01-30
 
 ### 🐛 Bug Fixes
