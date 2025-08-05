@@ -25,7 +25,7 @@ examples:
 	done
 
 run-examples: examples
-	echo
+	@echo
 	@for example in $(EXAMPLES); do \
 		echo -e "Running $$example..."; \
 		./examples/bin/$$example $(TESTARGS); \

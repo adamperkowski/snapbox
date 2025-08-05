@@ -13,7 +13,9 @@ Supported Jule Versions:
 - `jule0.1.2`
 - `jule0.1.3`
 - `jule0.1.4`
-- `jule0.1.5@master`
+- `jule0.1.5`
+- `jule0.1.6`
+- `jule0.1.7@master`
 
 ## Features
 Currently fully supported request methods:

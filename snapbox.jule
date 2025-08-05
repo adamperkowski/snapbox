@@ -8,8 +8,8 @@ BSD 3-Clause License
 
 #pass "-lcurl"
 
-use "header"
-use "status"
+use "snapbox/header"
+use "snapbox/status"
 
 cpp use "internal/curlwrapper.hpp"
 
@@ -37,15 +37,15 @@ struct Request {
 
 impl Request {
 	// Executes the request and returns the response.
-	fn Send(self): cpp.Response {
+	fn Send(*self): cpp.Response {
 		headers := header::Slice(self.headers)
 		ret cpp.request(self.url, headers, self.method)
 	}
 
 	// Sets headers for the request.
-	fn Headers(self, headers: header::HeaderMap): Request {
+	fn Headers(*self, headers: header::HeaderMap): Request {
 		self.headers = headers
-		ret self
+		ret *self
 	}
 }
 
@@ -59,21 +59,21 @@ struct DataRequest {
 
 impl DataRequest {
 	// Executes the request and returns the response.
-	fn Send(self): cpp.Response {
+	fn Send(*self): cpp.Response {
 		headers := header::Slice(self.headers)
 		ret cpp.post(self.url, self.data, headers, self.method)
 	}
 
 	// Sets headers for the request.
-	fn Headers(self, headers: header::HeaderMap): DataRequest {
+	fn Headers(*self, headers: header::HeaderMap): DataRequest {
 		self.headers = headers
-		ret self
+		ret *self
 	}
 
 	// Sets data for the request.
-	fn Data(self, data: str): DataRequest {
+	fn Data(*self, data: str): DataRequest {
 		self.data = data
-		ret self
+		ret *self
 	}
 }
 

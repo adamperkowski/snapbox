@@ -36,8 +36,8 @@ jobs:
 
       - name: Install JuleDoc
         run: |
-          git clone https://github.com/julelang/juledoc.git --depth=1 .juledoc
-          cd .juledoc
+          git clone https://github.com/julelang/juledoc.git --depth=1 juledoc
+          cd juledoc
           mkdir -p bin
           julec --opt-deadcode -o bin/juledoc ./src
           echo "$(pwd)/bin" >> $GITHUB_PATH
@@ -49,7 +49,7 @@ jobs:
       - name: Clean up
         run: |
           make clean
-          rm -rf .julec .juledoc **/.*out **/bin
+          rm -rf .julec juledoc **/.*out **/bin
 
       - name: Commit and tag
         run: |

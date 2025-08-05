@@ -4,9 +4,9 @@
 // Copyright (c) 2025, Adam Perkowski
 // BSD 3-Clause License
 
-use snapbox "../.."
-use "../../header"
-use "../../status"
+use "snapbox"
+use "snapbox/header"
+use "snapbox/status"
 
 const DATA = "Puttin' on the Ritz..."
 
