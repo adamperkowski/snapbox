@@ -1,0 +1,331 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>snapbox/status - snapbox</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "coal";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">snapbox</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/adamperkowski/snapbox" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/adamperkowski/snapbox/edit/main/book/src/api/status.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="index"><a class="header" href="#index">Index</a></h2>
+<p><a href="#variables">Variables</a><br />
+<a href="#statuscode">type StatusCode</a><br />
+<a href="#isinformational">fn IsInformational(code: StatusCode): bool</a><br />
+<a href="#issuccess">fn IsSuccess(code: StatusCode): bool</a><br />
+<a href="#isredirection">fn IsRedirection(code: StatusCode): bool</a><br />
+<a href="#isclienterror">fn IsClientError(code: StatusCode): bool</a><br />
+<a href="#isservererror">fn IsServerError(code: StatusCode): bool</a></p>
+<h2 id="variables"><a class="header" href="#variables">Variables</a></h2>
+<pre><code class="language-jule">const CONTINUE: StatusCode = 100
+const SWITCHING_PROTOCOLS: StatusCode = 101
+const PROCESSING: StatusCode = 102
+const OK: StatusCode = 200
+const CREATED: StatusCode = 201
+const ACCEPTED: StatusCode = 202
+const NON_AUTHORITATIVE_INFORMATION: StatusCode = 203
+const NO_CONTENT: StatusCode = 204
+const RESET_CONTENT: StatusCode = 205
+const PARTIAL_CONTENT: StatusCode = 206
+const MULTI_STATUS: StatusCode = 207
+const ALREADY_REPORTED: StatusCode = 208
+const IM_USED: StatusCode = 226
+const MULTIPLE_CHOICES: StatusCode = 300
+const MOVED_PERMANENTLY: StatusCode = 301
+const FOUND: StatusCode = 302
+const SEE_OTHER: StatusCode = 303
+const NOT_MODIFIED: StatusCode = 304
+const USE_PROXY: StatusCode = 305
+const TEMPORARY_REDIRECT: StatusCode = 307
+const PERMANENT_REDIRECT: StatusCode = 308
+const BAD_REQUEST: StatusCode = 400
+const UNAUTHORIZED: StatusCode = 401
+const PAYMENT_REQUIRED: StatusCode = 402
+const FORBIDDEN: StatusCode = 403
+const NOT_FOUND: StatusCode = 404
+const METHOD_NOT_ALLOWED: StatusCode = 405
+const NOT_ACCEPTABLE: StatusCode = 406
+const PROXY_AUTHENTICATION_REQUIRED: StatusCode = 407
+const REQUEST_TIMEOUT: StatusCode = 408
+const CONFLICT: StatusCode = 409
+const GONE: StatusCode = 410
+const LENGTH_REQUIRED: StatusCode = 411
+const PRECONDITION_FAILED: StatusCode = 412
+const PAYLOAD_TOO_LARGE: StatusCode = 413
+const URI_TOO_LONG: StatusCode = 414
+const UNSUPPORTED_MEDIA_TYPE: StatusCode = 415
+const RANGE_NOT_SATISFIABLE: StatusCode = 416
+const EXPECTATION_FAILED: StatusCode = 417
+const IM_A_TEAPOT: StatusCode = 418
+const MISDIRECTED_REQUEST: StatusCode = 421
+const UNPROCESSABLE_ENTITY: StatusCode = 422
+const LOCKED: StatusCode = 423
+const FAILED_DEPENDENCY: StatusCode = 424
+const UPGRADE_REQUIRED: StatusCode = 426
+const PRECONDITION_REQUIRED: StatusCode = 428
+const TOO_MANY_REQUESTS: StatusCode = 429
+const REQUEST_HEADER_FIELDS_TOO_LARGE: StatusCode = 431
+const UNAVAILABLE_FOR_LEGAL_REASONS: StatusCode = 451
+const INTERNAL_SERVER_ERROR: StatusCode = 500
+const NOT_IMPLEMENTED: StatusCode = 501
+const BAD_GATEWAY: StatusCode = 502
+const SERVICE_UNAVAILABLE: StatusCode = 503
+const GATEWAY_TIMEOUT: StatusCode = 504
+const HTTP_VERSION_NOT_SUPPORTED: StatusCode = 505
+const VARIANT_ALSO_NEGOTIATES: StatusCode = 506
+const INSUFFICIENT_STORAGE: StatusCode = 507
+const LOOP_DETECTED: StatusCode = 508
+const NOT_EXTENDED: StatusCode = 510
+const NETWORK_AUTHENTICATION_REQUIRED: StatusCode = 511
+</code></pre>
+<h2 id="statuscode"><a class="header" href="#statuscode">StatusCode</a></h2>
+<pre><code class="language-jule">type StatusCode = int
+</code></pre>
+<p>The status code type used for responses.</p>
+<h2 id="isinformational"><a class="header" href="#isinformational">IsInformational</a></h2>
+<pre><code class="language-jule">fn IsInformational(code: StatusCode): bool
+</code></pre>
+<p>Checks if a status code is informational. (1xx)</p>
+<h2 id="issuccess"><a class="header" href="#issuccess">IsSuccess</a></h2>
+<pre><code class="language-jule">fn IsSuccess(code: StatusCode): bool
+</code></pre>
+<p>Checks if a status code is a success. (2xx)</p>
+<h2 id="isredirection"><a class="header" href="#isredirection">IsRedirection</a></h2>
+<pre><code class="language-jule">fn IsRedirection(code: StatusCode): bool
+</code></pre>
+<p>Checks if a status code is a redirection. (3xx)</p>
+<h2 id="isclienterror"><a class="header" href="#isclienterror">IsClientError</a></h2>
+<pre><code class="language-jule">fn IsClientError(code: StatusCode): bool
+</code></pre>
+<p>Checks if a status code is a client error. (4xx)</p>
+<h2 id="isservererror"><a class="header" href="#isservererror">IsServerError</a></h2>
+<pre><code class="language-jule">fn IsServerError(code: StatusCode): bool
+</code></pre>
+<p>Checks if a status code is a server error. (5xx)</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../api/snapbox.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../api/header.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../api/snapbox.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../api/header.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../theme/jule-highlight.js"></script>
+
+
+
+    </div>
+    </body>
+</html>
