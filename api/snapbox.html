@@ -189,12 +189,12 @@
 <a href="#delete">fn DELETE(url: str): DataRequest</a><br />
 <a href="#download">fn Download(url: str, path: str)!</a><br />
 <a href="#request">struct Request</a><br />
-    <a href="#send">fn Send(self): cpp.Response</a><br />
-    <a href="#headers">fn Headers(self, headers: header::HeaderMap): Request</a><br />
+    <a href="#send">fn Send(*self): cpp.Response</a><br />
+    <a href="#headers">fn Headers(*self, headers: header::HeaderMap): Request</a><br />
 <a href="#datarequest">struct DataRequest</a><br />
-    <a href="#send-1">fn Send(self): cpp.Response</a><br />
-    <a href="#headers-1">fn Headers(self, headers: header::HeaderMap): DataRequest</a><br />
-    <a href="#data">fn Data(self, data: str): DataRequest</a></p>
+    <a href="#send-1">fn Send(*self): cpp.Response</a><br />
+    <a href="#headers-1">fn Headers(*self, headers: header::HeaderMap): DataRequest</a><br />
+    <a href="#data">fn Data(*self, data: str): DataRequest</a></p>
 <h2 id="get"><a class="header" href="#get">GET</a></h2>
 <pre><code class="language-jule">fn GET(url: str): Request
 </code></pre>
@@ -226,11 +226,11 @@
 </code></pre>
 <p>Request structure for non-data requests.</p>
 <h3 id="send"><a class="header" href="#send">Send</a></h3>
-<pre><code class="language-jule">fn Send(self): cpp.Response
+<pre><code class="language-jule">fn Send(*self): cpp.Response
 </code></pre>
 <p>Executes the request and returns the response.</p>
 <h3 id="headers"><a class="header" href="#headers">Headers</a></h3>
-<pre><code class="language-jule">fn Headers(self, headers: header::HeaderMap): Request
+<pre><code class="language-jule">fn Headers(*self, headers: header::HeaderMap): Request
 </code></pre>
 <p>Sets headers for the request.</p>
 <h2 id="datarequest"><a class="header" href="#datarequest">DataRequest</a></h2>
@@ -240,15 +240,15 @@
 </code></pre>
 <p>Request structure for data requests.</p>
 <h3 id="send-1"><a class="header" href="#send-1">Send</a></h3>
-<pre><code class="language-jule">fn Send(self): cpp.Response
+<pre><code class="language-jule">fn Send(*self): cpp.Response
 </code></pre>
 <p>Executes the request and returns the response.</p>
 <h3 id="headers-1"><a class="header" href="#headers-1">Headers</a></h3>
-<pre><code class="language-jule">fn Headers(self, headers: header::HeaderMap): DataRequest
+<pre><code class="language-jule">fn Headers(*self, headers: header::HeaderMap): DataRequest
 </code></pre>
 <p>Sets headers for the request.</p>
 <h3 id="data"><a class="header" href="#data">Data</a></h3>
-<pre><code class="language-jule">fn Data(self, data: str): DataRequest
+<pre><code class="language-jule">fn Data(*self, data: str): DataRequest
 </code></pre>
 <p>Sets data for the request.</p>
 
