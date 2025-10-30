@@ -18,7 +18,7 @@ examples:
 	@for example in $(EXAMPLES); do \
 		cd examples/$$example; \
 		echo "Building $$example..."; \
-		if ! $(JULEC) . -o ../bin/$$example; then \
+		if ! $(JULEC) build . -o ../bin/$$example; then \
 			exit 1; \
 		fi; \
 		cd ../..; \

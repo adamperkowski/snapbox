@@ -1,4 +1,3 @@
-snapbox
 doc.*
 output.*
 **/*.tar.gz
@@ -6,4 +5,5 @@ output.*
 **/*.out
 **/dist
 **/bin
+**/main
 **/*.pch

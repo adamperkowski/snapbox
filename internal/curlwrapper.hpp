@@ -4,10 +4,6 @@
 // Copyright (c) 2025, Adam Perkowski
 // BSD 3-Clause License
 
-#ifdef DEBUG
-#include <jule.hpp>
-#endif
-
 #ifndef CURLWRAPPER_HPP
 #define CURLWRAPPER_HPP
 
@@ -23,15 +19,15 @@ static size_t WriteFileCallback(void* ptr, size_t size, size_t nmemb, FILE* stre
     return fwrite(ptr, size, nmemb, stream);
 }
 
-static std::string strToString(jule::Str str) {
+static std::string strToString(__jule_Str str) {
     std::string result = "";
-    for (jule::U8& c : str) {
+    for (__jule_U8& c : str) {
         result += c;
     }
     return result;
 }
 
-static struct curl_slist* sliceToSlist(const jule::Slice<jule::Str> headersSlice) {
+static struct curl_slist* sliceToSlist(const __jule_Slice<__jule_Str> headersSlice) {
     struct curl_slist* headers = NULL;
     const int headersLen = headersSlice.len();
     for (size_t i = 0; i < headersLen; i += 2) {
@@ -44,11 +40,11 @@ static struct curl_slist* sliceToSlist(const jule::Slice<jule::Str> headersSlice
 }
 
 struct Response {
-    jule::Str body;
-    jule::Int status;
+    __jule_Str body;
+    __jule_Int status;
 };
 
-static Response request(const char *url, const jule::Slice<jule::Str> headers, const jule::Int method) {
+static Response request(const char *url, const __jule_Slice<__jule_Str> headers, const __jule_Int method) {
     CURL* curl;
     CURLcode res;
     std::string readBuffer;
@@ -83,7 +79,7 @@ static Response request(const char *url, const jule::Slice<jule::Str> headers, c
     return response;
 }
 
-static Response post(const char *url, const char *data, const jule::Slice<jule::Str> headers, const jule::Int method) {
+static Response post(const char *url, const char *data, const __jule_Slice<__jule_Str> headers, const __jule_Int method) {
     CURL* curl;
     CURLcode res;
     std::string readBuffer;
@@ -123,7 +119,7 @@ static Response post(const char *url, const char *data, const jule::Slice<jule::
     return response;
 }
 
-static bool download(jule::Str url, jule::Str filename) {
+static bool download(__jule_Str url, __jule_Str filename) {
     CURL* curl = curl_easy_init();
     if (!curl) {
         return false;

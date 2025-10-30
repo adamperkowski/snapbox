@@ -10,3 +10,5 @@ TODO
 - create a builder for args (`url?key0=value0&key1=value1`) (very low priority)
 - implement cookies (very low priority)
 - make both StatusCode and HeaderMap hard type aliases and implement the associated functions
+
+- move all examples into one module

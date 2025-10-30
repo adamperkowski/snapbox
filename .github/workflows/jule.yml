@@ -28,7 +28,7 @@ jobs:
           git clone https://github.com/julelang/julefmt.git --depth=1 .julefmt
           cd .julefmt
           mkdir -p bin
-          julec --opt-deadcode -o bin/julefmt ./src
+          julec build --opt-deadcode -o bin/julefmt ./src
           echo "$(pwd)/bin" >> $GITHUB_PATH
           cd ..
 

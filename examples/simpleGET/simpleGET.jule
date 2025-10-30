@@ -4,9 +4,9 @@
 // Copyright (c) 2025, Adam Perkowski
 // BSD 3-Clause License
 
-use "snapbox"
-use "snapbox/header"
-use "snapbox/status"
+use "example/snapbox"
+use "example/snapbox/header"
+use "example/snapbox/status"
 
 fn main() {
 	let headerMap: header::HeaderMap = {

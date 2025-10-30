@@ -39,7 +39,7 @@ jobs:
           git clone https://github.com/julelang/juledoc.git --depth=1 juledoc
           cd juledoc
           mkdir -p bin
-          julec --opt-deadcode -o bin/juledoc ./src
+          julec build --opt-deadcode -o bin/juledoc ./src
           echo "$(pwd)/bin" >> $GITHUB_PATH
           cd ..
 

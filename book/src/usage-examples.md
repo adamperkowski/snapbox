@@ -9,19 +9,19 @@ use "snapbox/header"
 use "snapbox/status"
 
 fn main() {
-        let headerMap: header::HeaderMap = {
-                header::ACCEPT: "application/json",
-        }
+	let headerMap: header::HeaderMap = {
+		header::ACCEPT: "application/json",
+	}
 
-        request := snapbox::GET("https://httpbin.org/get").Headers(headerMap)
-        response := request.Send()
+	request := snapbox::GET("https://httpbin.org/get").Headers(headerMap)
+	response := request.Send()
 
-        if !status::IsSuccess(response.status) {
-                println("Error: ")
-                println(response.status)
-        }
+	if !status::IsSuccess(response.status) {
+		println("Error: ")
+		println(response.status)
+	}
 
-        print(response.body)
+	print(response.body)
 }
 
 // post.jule
@@ -32,20 +32,20 @@ use "snapbox/status"
 const DATA = "Hello, World!"
 
 fn main() {
-        let headerMap: header::HeaderMap = {
-                header::ACCEPT: "application/json",
-                header::CONTENT_TYPE: "text/plain",
-        }
+	let headerMap: header::HeaderMap = {
+		header::ACCEPT: "application/json",
+		header::CONTENT_TYPE: "text/plain",
+	}
 
-        request := snapbox::POST("https://httpbin.org/post").Data(DATA).Headers(headerMap)
-        response := request.Send()
+	request := snapbox::POST("https://httpbin.org/post").Data(DATA).Headers(headerMap)
+	response := request.Send()
 
-        if !status::IsSuccess(response.status) {
-                println("Error: ")
-                println(response.status)
-        }
+	if !status::IsSuccess(response.status) {
+		println("Error: ")
+		println(response.status)
+	}
 
-        print(response.body)
+	print(response.body)
 }
 ```
 
@@ -55,9 +55,9 @@ fn main() {
 use "snapbox"
 
 fn main() {
-        snapbox::Download("https://httpbin.org/get", "output.txt") else {
-                println(error)
-        }
+	snapbox::Download("https://httpbin.org/get", "output.txt") else {
+		println(error)
+	}
 }
 ```
 See the [examples directory] for a full list of examples.
